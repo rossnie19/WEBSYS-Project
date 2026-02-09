@@ -1,0 +1,587 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>Mezzanine | Elevated Dining</title> 
+    
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ========== CSS CUSTOM PROPERTIES (VARIABLES) ========== */
+        :root {
+            --color-primary: #7C1309; 
+            --color-accent: #D6A34F; 
+            --color-light: #FFF7EF; 
+            --color-white: #FFFFFF; 
+            --color-dark: #1a1a1a; 
+            --font-serif: 'Playfair Display', serif; 
+            --font-sans: 'Lato', sans-serif; 
+        }
+
+        /* ========== GLOBAL RESET STYLES ========== */
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+
+        /* ========== BODY BASE STYLES ========== */
+        body {
+            font-family: var(--font-sans); 
+            background-color: var(--color-light); 
+            color: var(--color-dark); 
+            line-height: 1.6; 
+        }
+
+        /* ========== TYPOGRAPHY DEFAULTS ========== */
+        h1, h2, h3 { font-family: var(--font-serif); } 
+        a { 
+            text-decoration: none; 
+            color: inherit; 
+            transition: color 0.3s ease; 
+        }
+        ul { list-style: none; } 
+
+        /* ========== NAVIGATION BAR ========== */
+        .navbar {
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            padding: 1.2rem 3rem; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            z-index: 1000; 
+            background-color: transparent; 
+            border-bottom: 1px solid rgba(255,255,255,0.1); 
+            transition: all 0.4s ease; 
+        }
+
+        .navbar.scrolled {
+            background-color: var(--color-white); 
+            padding: 0.8rem 3rem; 
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05); 
+            border-bottom: none; 
+        }
+
+        .brand-logo {
+            font-family: var(--font-serif); 
+            font-size: 1.5rem; 
+            font-weight: 700; 
+            letter-spacing: 0.15em; 
+            text-transform: uppercase; 
+            color: var(--color-white); 
+        }
+
+        .navbar.scrolled .brand-logo {
+            color: var(--color-primary); 
+        }
+
+        .nav-links {
+            display: flex; 
+            gap: 2.5rem; 
+        }
+
+        .nav-link {
+            font-size: 0.75rem; 
+            text-transform: uppercase; 
+            letter-spacing: 0.15em; 
+            font-weight: 700; 
+            color: var(--color-white); 
+            position: relative; 
+        }
+
+        .navbar.scrolled .nav-link {
+            color: var(--color-dark); 
+        }
+
+        .nav-link::after { 
+            content: ''; 
+            position: absolute; 
+            width: 0; 
+            height: 1px; 
+            bottom: -5px; 
+            left: 0; 
+            background-color: var(--color-accent); 
+            transition: width 0.3s ease; 
+        }
+
+        .nav-link:hover::after { width: 100%; } 
+        
+        /* ========== HERO & PARALLAX SECTIONS ========== */
+        .hero, .parallax-separator {
+            background-attachment: fixed; 
+            background-position: center; 
+            background-repeat: no-repeat; 
+            background-size: cover; 
+            position: relative; 
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(
+                    rgba(124, 19, 9, 0.25),
+                    rgba(124, 19, 9, 0.25)
+                ),
+                rgba(0, 0, 0, 0.25);
+            z-index: 1;
+        }
+
+        /* ========== HERO SECTION SPECIFIC ========== */
+        .hero {
+            height: 100vh; 
+            background-image: url("images/heropic.jpg"); 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            text-align: center; 
+            color: var(--color-white); 
+        }
+
+        .hero-content {
+            position: relative; 
+            z-index: 2; 
+        }
+
+        .hero h1 {
+            font-size: 5rem; 
+            margin-bottom: 0.5rem; 
+            font-style: italic; 
+        }
+
+        .hero-sub {
+            font-size: 1rem; 
+            letter-spacing: 0.3em; 
+            text-transform: uppercase; 
+            margin-bottom: 3rem; 
+            border-bottom: 1px solid var(--color-accent); 
+            padding-bottom: 0.5rem; 
+            display: inline-block; 
+        }
+
+        /* ========== PARALLAX SEPARATOR SECTIONS ========== */
+        .parallax-separator {
+            height: 50vh; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+        }
+        
+        .parallax-text {
+            position: relative; 
+            z-index: 2; 
+            color: var(--color-white); 
+            font-family: var(--font-serif); 
+            font-size: 2rem; 
+            font-style: italic; 
+            letter-spacing: 2px; 
+            opacity: 0.9; 
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5); 
+        }
+
+        /* ========== CALL-TO-ACTION BUTTON ========== */
+        .btn-cta {
+            padding: 1rem 2.5rem; 
+            background: transparent; 
+            border: 1px solid var(--color-white); 
+            color: var(--color-white); 
+            text-transform: uppercase; 
+            font-size: 0.7rem; 
+            letter-spacing: 0.2em; 
+            cursor: pointer; 
+            transition: all 0.3s ease; 
+        }
+
+        .btn-cta:hover {
+            background-color: var(--color-primary); 
+            border-color: var(--color-primary); 
+        }
+
+        /* ========== COMMON LAYOUT COMPONENTS ========== */
+        .section-padding { padding: 6rem 1.5rem; } 
+        .wrapper { max-width: 1100px; margin: 0 auto; } 
+        
+        .section-header {
+            text-align: center; 
+            margin-bottom: 4rem; 
+        }
+
+        .section-title {
+            font-size: 2.5rem; 
+            color: var(--color-primary); 
+            margin-bottom: 1rem; 
+            font-weight: 400; 
+        }
+
+        .divider {
+            width: 60px; 
+            height: 2px; 
+            background-color: var(--color-accent); 
+            margin: 0 auto; 
+        }
+
+        /* ========== INTRO TEXT BLOCK ========== */
+        .intro-block { 
+            text-align: center; 
+            max-width: 700px; 
+            margin: 0 auto; 
+            font-size: 1.1rem; 
+        }
+        .intro-block strong { color: var(--color-primary); } 
+
+        /* ========== FEATURES SECTION WITH TEXTURED BACKGROUND ========== */
+        .bg-primary {
+            background-color: var(--color-primary); 
+            background-image: repeating-linear-gradient(
+                45deg, 
+                transparent, 
+                transparent 10px, 
+                rgba(0, 0, 0, 0.1) 10px, 
+                rgba(0, 0, 0, 0.1) 12px 
+            );
+            color: var(--color-white); 
+        }
+        
+        .bg-primary .section-title { color: var(--color-white); } 
+        .bg-primary .divider { 
+            background-color: var(--color-white); 
+            opacity: 0.5; 
+        }
+
+        .feature-grid {
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 3rem; 
+            text-align: center; 
+        }
+
+        .feature-card {
+            padding: 2rem; 
+            border: 1px solid rgba(255,255,255,0.1); 
+            transition: transform 0.3s ease, border-color 0.3s ease; 
+            background: rgba(255,255,255,0.02); 
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px); 
+            border-color: var(--color-accent); 
+            background-color: rgba(255,255,255,0.05); 
+        }
+
+        .feature-icon {
+            font-size: 1.5rem; 
+            margin-bottom: 1.5rem; 
+            display: block; 
+            color: var(--color-accent); 
+        }
+
+        .feature-card h3 { 
+            font-size: 1.4rem; 
+            margin-bottom: 1rem; 
+        }
+        
+        .feature-card p { 
+            font-size: 0.95rem; 
+            opacity: 0.9; 
+        }
+
+        /* ========== STORY SECTION (TWO-COLUMN LAYOUT) ========== */
+        .story-container {
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 4rem; 
+            align-items: center; 
+        }
+
+        .story-img {
+            width: 100%; 
+            height: 500px; 
+            object-fit: cover; 
+            box-shadow: 15px 15px 0 var(--color-primary); 
+        }
+
+        .quote-block {
+            font-family: var(--font-serif); 
+            font-size: 1.4rem; 
+            font-style: italic; 
+            color: var(--color-primary); 
+            border-left: 3px solid var(--color-accent); 
+            padding-left: 1.5rem; 
+            margin-bottom: 2rem; 
+        }
+
+        /* ========== CHEF PROFILES SECTION ========== */
+        .chef-grid {
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 2rem; 
+            max-width: 800px; 
+            margin: 0 auto; 
+        }
+
+        .chef-profile { text-align: center; } 
+        
+        .chef-photo {
+            width: 100%; 
+            height: 350px; 
+            object-fit: cover; 
+            filter: grayscale(100%); 
+            transition: filter 0.3s ease; 
+            margin-bottom: 1rem; 
+        }
+
+        .chef-profile:hover .chef-photo { filter: grayscale(0%); } 
+
+        .chef-role {
+            display: block; 
+            font-size: 0.7rem; 
+            text-transform: uppercase; 
+            letter-spacing: 0.15em; 
+            color: var(--color-primary); 
+            margin-bottom: 0.5rem; 
+            font-weight: 700; 
+        }
+
+        /* ========== FOOTER ========== */
+        footer {
+            background-color: #111; 
+            color: #ccc; 
+            text-align: center; 
+            padding: 5rem 1rem 3rem; 
+            border-top: 3px solid var(--color-primary); 
+        }
+
+        .footer-logo {
+            font-family: var(--font-serif); 
+            font-size: 2.5rem; 
+            color: var(--color-white); 
+            margin-bottom: 4rem; 
+            display: inline-block; 
+            letter-spacing: 2px; 
+        }
+
+        .footer-details {
+            max-width: 1100px; 
+            margin: 0 auto 3rem; 
+            font-size: 0.9rem; 
+            line-height: 2; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: flex-start; 
+            flex-wrap: wrap; 
+            gap: 2rem; 
+        }
+
+        .footer-section {
+            flex: 1; 
+            min-width: 200px; 
+            margin-bottom: 1rem; 
+        }
+
+        .footer-section strong {
+            color: var(--color-accent); 
+            text-transform: uppercase; 
+            letter-spacing: 1.5px; 
+            font-size: 0.8rem; 
+            display: block; 
+            margin-bottom: 1rem; 
+        }
+
+        .contact-number {
+            color: var(--color-white); 
+            font-weight: 700; 
+        }
+
+        .copyright { 
+            font-size: 0.75rem; 
+            opacity: 0.5; 
+            border-top: 1px solid #333; 
+            padding-top: 2rem; 
+            margin-top: 2rem; 
+            max-width: 1100px; 
+            margin-left: auto; 
+            margin-right: auto; 
+        }
+
+        /* ========== RESPONSIVE DESIGN (MOBILE) ========== */
+        @media (max-width: 768px) { 
+            .navbar { padding: 1rem; } 
+            .nav-links { display: none; } 
+            .hero h1 { font-size: 3.5rem; } 
+            .story-container { grid-template-columns: 1fr; } 
+            .chef-grid { grid-template-columns: 1fr; } 
+            .story-img { height: 300px; } 
+            .parallax-separator { height: 30vh; } 
+            
+            .footer-details {
+                flex-direction: column; 
+                align-items: center; 
+                gap: 3rem; 
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar"> 
+        <div class="brand-logo">Mezzanine</div> 
+        <div class="nav-links"> 
+            <a href="#" class="nav-link">Home</a> 
+            <a href="#" class="nav-link">Cuisine</a> 
+            <a href="#" class="nav-link">Gallery</a> 
+            <a href="#" class="nav-link">Reservations</a> 
+            <a href="#" class="nav-link">Location</a> 
+        </div>
+    </nav>
+
+    <header class="hero"> 
+        <div class="hero-content"> 
+            <h1>Mezzanine</h1> 
+            <div class="hero-sub">Elevated Filipino & French Dining</div><br> 
+            <button class="btn-cta">Book a Table</button> 
+        </div>
+    </header>
+
+    <section class="section-padding wrapper"> 
+        <div class="section-header"> 
+            <h2 class="section-title">Our Brand</h2> 
+            <div class="divider"></div> 
+        </div>
+        <p class="intro-block"> 
+            <strong>Timeless. Cultural. Authentic.</strong><br><br> 
+            We are a restaurant that brings together Filipino and French cuisine in a way that feels natural and intentional. 
+            Our food is inspired by Filipino flavors that many of us grew up with, paired with the structure, techniques, and attention to detail found in French cooking. 
+            The result is a menu that respects both cultures while creating something distinct. <br><br>
+
+            
+            Our approach to cooking is rooted in care and discipline. We focus on quality ingredients, thoughtful preparation, and balanced flavors. 
+            Filipino cuisine gives our dishes warmth and familiarity, while French techniques allow us to refine textures, presentation, and depth. 
+            Each plate is designed to be approachable, well-crafted, and satisfying. <br><br>
+
+            We value heritage and craftsmanship in everything we do. Our team is dedicated to honoring the rich culinary traditions of both cultures while 
+            pushing boundaries to create a dining experience that is uniquely Mezzanine. <br><br>
+            <strong>We cook to bring people together and to create a place where guests feel welcome and cared for.</strong> 
+        </p>
+    </section>
+
+    <div class="parallax-separator" style="background-image: url('images/parallax1.jpg');"> 
+        <span class="parallax-text">Artistry on the Plate</span> 
+    </div>
+
+    <section class="section-padding bg-primary"> 
+        <div class="wrapper"> 
+            <div class="section-header"> 
+                <h2 class="section-title">Experience Us</h2> 
+                <div class="divider"></div> 
+            </div>
+            <div class="feature-grid"> 
+                <div class="feature-card"> 
+                    <h3>Fine Dining</h3> 
+                    <p>A carefully curated dining experience that highlights Filipino and French cuisine in every course.</p> 
+                </div>
+                <div class="feature-card"> 
+                    <h3>Intimate Modern Ambience</h3> 
+                    <p>A relaxed yet refined setting designed for comfortable and focused dining.</p> 
+                </div>
+                <div class="feature-card"> 
+                    <h3>Family-Oriented Hospitality</h3> 
+                    <p>A warm and respectful approach to service where every guest is treated like family.</p> 
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="parallax-separator" style="background-image: url('images/parallax2.jpg');"> 
+        <span class="parallax-text">Curated Selections</span> 
+    </div>
+
+    <section class="section-padding wrapper"> 
+        <div class="story-container"> 
+            <div class="story-content"> 
+                <h2 class="section-title" style="text-align: left;">Our Origins</h2> 
+                <div class="divider" style="margin: 0 0 2rem 0;"></div> 
+                <div class="quote-block"> 
+                    "We wanted to build a place where a Parisian chef would feel at home eating Kare-Kare." 
+                </div>
+                <p> 
+                    What began as a conversation over coffee in Le Marais became a mission in Manila. Founders Chef Alain and Isabella realized that Filipino and French cultures share a core value: <strong>the meal is sacred</strong>. Mezzanine was born from the desire to elevate this shared ritual. 
+                </p>
+            </div>
+            <img src="images/origins.jpg" alt="Founders" class="story-img"> 
+        </div>
+    </section>
+
+    <div class="parallax-separator" style="background-image: url('images/parallax3.jpg');"> 
+        <span class="parallax-text">Crafted with Passion</span> 
+    </div>
+
+    <section class="section-padding" style="background-color: var(--color-light);"> 
+        <div class="wrapper"> 
+            <div class="section-header"> 
+                <h2 class="section-title">The Kitchen</h2> 
+                <div class="divider"></div> 
+                <br>
+                <p class="intro-block">
+                    Behind every plate is a team devoted to craft and culture. The Mezzanine kitchen is a space of 
+                    collaboration, passion, and respect for the stories behind each ingredient.
+                </p>
+
+            </div>
+            <div class="chef-grid"> 
+                <div class="chef-profile"> 
+                    <img src="images/chefexec.png" alt="Alain Rayé" class="chef-photo"> 
+                    <span class="chef-role">Executive Chef</span> 
+                    <h3>Chef Loïc Brun</h3> 
+                </div>
+                <div class="chef-profile"> 
+                    <img src="images/chef.png" alt="Maria Santos" class="chef-photo"> 
+                    <span class="chef-role">Chef de Cuisine</span> 
+                    <h3>Sau Del Rosario</h3> 
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer> 
+        <div class="footer-logo">MEZZANINE</div> 
+        
+        <div class="footer-details"> 
+            <div class="footer-section"> 
+                <strong>Visit Us</strong> 
+                <p>Level M, Active Fun Bldg.,<br>9th Avenue Cor. 28th St.,<br>BGC, Taguig City.</p> 
+            </div>
+
+            <div class="footer-section"> 
+                <strong>Opening Hours</strong> 
+                <p>Monday to Sunday<br>11:00 AM – 11:00 PM</p> 
+            </div>
+
+            <div class="footer-section"> 
+                <strong>Contact</strong> 
+                <p>Connect with us via Call or WhatsApp:<br><span class="contact-number">+63 917 138 3612</span></p> 
+            </div>
+        </div>
+
+        <div class="copyright"> 
+            &copy; 2024 Mezzanine Group. All Rights Reserved. 
+        </div>
+    </footer>
+
+    <script>
+        const navbar = document.querySelector('.navbar'); 
+        window.addEventListener('scroll', () => { 
+            if (window.scrollY > 50) { 
+                navbar.classList.add('scrolled'); 
+            } else { 
+                navbar.classList.remove('scrolled'); 
+            }
+        });
+    </script>
+</body>
+</html>
