@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery | Mezzanine</title>
+    <style>
+      
+        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap');
+
+        
+        :root {
+            --burgundy: #7C1309;      
+            --gold: #D6A34F;          
+            --orange-pop: #FEAA07;    
+            --cream-bg: #FFF7EF;      
+            --white: #FFFFFF;
+            --text-dark: #1a1a1a;
+        }
+
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: var(--cream-bg);
+            color: var(--text-dark);
+            line-height: 1.8;
+        }
+
+        h1, h2, h3, h4 { font-family: 'Playfair Display', serif; }
+
+        .section-title {
+            font-size: 48px;
+            color: var(--burgundy);
+            text-align: center;
+            font-weight: 400;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .section-divider {
+            width: 80px;
+            height: 3px;
+            background-color: var(--gold);
+            margin: 0 auto 60px auto;
+        }
+
+       
+        header {
+            background-color: var(--white);
+            padding: 25px 40px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(124, 19, 9, 0.1);
+            border-top: 5px solid var(--burgundy);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--burgundy);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        nav ul { display: flex; list-style: none; gap: 40px; }
+        nav a {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-dark);
+            font-weight: 700;
+            position: relative;
+            text-decoration: none;
+        }
+
+        nav a.active { color: var(--burgundy); }
+
+        /* INTRO SECTION */
+        .gallery-intro {
+            padding: 80px 20px 40px;
+            text-align: center;
+        }
+
+        .gallery-intro p {
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 19px;
+            color: #444;
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        .gallery-intro strong {
+            color: var(--burgundy);
+        }
+
+        
+        .food-gallery-wrapper {
+            padding: 40px 0 80px;
+            background-color: var(--white);
+        }
+
+        .slider-container {
+            display: flex;
+            overflow-x: auto;
+            gap: 20px;
+            padding: 0 40px 40px 40px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--gold) transparent;
+        }
+
+        .food-item {
+            min-width: 320px;
+            flex: 0 0 auto;
+            position: relative;
+            text-align: center;
+        }
+
+        .food-item img {
+            width: 100%;
+            height: 450px;
+            object-fit: cover;
+            border-radius: 2px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .minimal-caption {
+            margin-top: 15px;
+            font-family: 'Lato', sans-serif;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--burgundy);
+            font-weight: 700;
+        }
+
+       
+        .restaurant-gallery-wrapper {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 100px 20px;
+        }
+
+        .moments-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+        }
+
+        .moment-card {
+            background: var(--white);
+            padding: 20px;
+            box-shadow: 15px 15px 0px var(--burgundy); 
+        }
+
+        .moment-card img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            margin-bottom: 20px;
+        }
+
+        .moment-desc {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 18px;
+            color: #444;
+            text-align: center;
+        }
+
+        
+        footer {
+            background-color: var(--burgundy);
+            color: var(--white);
+            padding: 80px 20px 30px;
+            text-align: center;
+            border-top: 5px solid var(--gold);
+        }
+
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            margin-bottom: 30px;
+            display: block;
+            color: var(--gold);
+        }
+
+        .footer-links {
+            margin-bottom: 40px;
+        }
+
+        .footer-links a {
+            margin: 0 15px;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        .copyright {
+            font-size: 12px;
+            opacity: 0.6;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .moments-grid { grid-template-columns: 1fr; }
+            .food-item { min-width: 280px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">Mezzanine</div>
+        <nav>
+            <ul>
+                <li><a href="main.html">Home</a></li>
+                <li><a href="#">Cuisine</a></li>
+                <li><a href="#" class="active">Gallery</a></li>
+                <li><a href="#">Reservations</a></li>
+                <li><a href="#">Location</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="gallery-intro">
+        <h2 class="section-title">A Feast for the Senses</h2>
+        <div class="section-divider"></div>
+        <p>
+            Welcome to the Mezzanine's visual journal. From the meticulous <strong>French techniques</strong> 
+            applied to heritage <strong>Filipino ingredients</strong>, to the candid, "human" moments 
+            that define our service—explore the artistry behind our craft.
+        </p>
+    </section>
+
+    <div class="food-gallery-wrapper">
+        <h2 class="section-title">Food Gallery</h2>
+        <div class="section-divider"></div>
+        
+        <div class="slider-container">
+            <div class="food-item">
+                <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=600" alt="Dish">
+                <p class="minimal-caption">Adobo Confit</p>
+            </div>
+            <div class="food-item">
+                <img src="https://images.unsplash.com/photo-1546039907-7fa05f864c02?auto=format&fit=crop&w=600" alt="Dish">
+                <p class="minimal-caption">Sinigang Bouillabaisse</p>
+            </div>
+            <div class="food-item">
+                <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=600" alt="Dish">
+                <p class="minimal-caption">Wagyu Bistek</p>
+            </div>
+            <div class="food-item">
+                <img src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=600" alt="Dish">
+                <p class="minimal-caption">Ube Soufflé</p>
+            </div>
+            <div class="food-item">
+                <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=600" alt="Dish">
+                <p class="minimal-caption">Fresh Harvest Ensalada</p>
+            </div>
+            <div class="food-item">
+                <img src="https://images.unsplash.com/photo-1583394838336-acd977736f90?auto=format&fit=crop&w=600" alt="Dish">
+                <p class="minimal-caption">Scallops & Saffron</p>
+            </div>
+        </div>
+    </div>
+
+    <section class="restaurant-gallery-wrapper">
+        <h2 class="section-title">Restaurant Gallery</h2>
+        <div class="section-divider"></div>
+
+        <div class="moments-grid">
+            <div class="moment-card">
+                <img src="drinks.jpg" alt="The Pour">
+                <div class="moment-desc">The perfect pour, every time.</div>
+            </div>
+            <div class="moment-card">
+                <img src="dining.jpg" alt="The Room">
+                <div class="moment-desc">Warmth in every corner.</div>
+            </div>
+            <div class="moment-card">
+                <img src="food.jpg" alt="The Chef">
+                <div class="moment-desc">Focus on the craft.</div>
+            </div>
+            <div class="moment-card">
+                <img src="memory.jpg" alt="The Table">
+                <div class="moment-desc">Where memories are served.</div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <span class="footer-logo">MEZZANINE</span>
+        <div class="footer-links">
+            <a href="main.html">Home</a>
+            <a href="#">Cuisine</a>
+            <a href="#">Gallery</a>
+            <a href="#">Reservations</a>
+            <a href="#">Location</a>
+        </div>
+        <p>9th Avenue Cor. 28th St., BGC, Taguig City, Philippines</p>
+        <p style="color: var(--gold); margin-top: 10px;">+63 917 138 3612</p>
+        <div class="copyright">
+            &copy; 2024 Mezzanine. All Rights Reserved.
+        </div>
+    </footer>
+
+</body>
+</html>
