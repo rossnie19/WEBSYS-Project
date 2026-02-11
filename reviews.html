@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reviews | Mezzanine</title>
+    <style>
+      
+        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap');
+
+        
+        :root {
+            --burgundy: #7C1309;      
+            --gold: #D6A34F;          
+            --orange-pop: #FEAA07;    
+            --cream-bg: #FFF7EF;      
+            --white: #FFFFFF;
+            --text-dark: #1a1a1a;
+        }
+
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: var(--cream-bg);
+            color: var(--text-dark);
+            line-height: 1.8;
+        }
+
+        h1, h2, h3, h4 { font-family: 'Playfair Display', serif; }
+
+        .section-title {
+            font-size: 48px;
+            color: var(--burgundy);
+            text-align: center;
+            font-weight: 400;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .section-divider {
+            width: 80px;
+            height: 3px;
+            background-color: var(--gold);
+            margin: 0 auto 60px auto;
+        }
+
+        /* NAVIGATION */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.2rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background-color: transparent;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.4s ease;
+        }
+
+        .navbar.scrolled {
+            background-color: var(--white);
+            padding: 0.8rem 3rem;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            border-bottom: none;
+        }
+
+        .brand-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--white);
+        }
+
+        .navbar.scrolled .brand-logo {
+            color: var(--burgundy);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .nav-link {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            font-weight: 700;
+            color: var(--white);
+            position: relative;
+            text-decoration: none;
+        }
+
+        .navbar.scrolled .nav-link {
+            color: var(--text-dark);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after { width: 100%; }
+        
+         .nav-dropdown {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 120%;
+            left: 0;
+            background: var(--white);
+            min-width: 200px;
+            padding: 0.8rem 0;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 0.6rem 1.2rem;
+            font-size: 0.75rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-dark);
+        }
+
+        .dropdown-menu a:hover {
+            background: var(--cream-bg);
+            color: var(--burgundy);
+        }
+
+        .nav-dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        /* PARALLAX HERO */
+        .reviews-hero {
+            height: 60vh;
+            background-image: url("heropic.jpg");
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .reviews-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(
+                    rgba(124, 19, 9, 0.25),
+                    rgba(124, 19, 9, 0.25)
+                ),
+                rgba(0, 0, 0, 0.25);
+            z-index: 1;
+        }
+
+        .reviews-hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: var(--white);
+        }
+
+        .reviews-hero h2 {
+            font-size: 60px;
+            color: var(--white);
+            margin-bottom: 20px;
+        }
+
+        .reviews-hero .section-divider {
+            background-color: var(--gold);
+            opacity: 0.9;
+        }
+
+        .reviews-hero p {
+            max-width: 700px;
+            margin: 30px auto 0;
+            font-size: 19px;
+            color: var(--white);
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        .reviews-hero strong {
+            color: var(--gold);
+        }
+
+        /* CELEBRITY GALLERY */
+        .celebrity-section {
+            padding: 100px 0;
+            background-color: var(--white);
+            overflow: hidden;
+        }
+
+        .celebrity-section-header {
+            padding: 0 40px;
+            margin-bottom: 60px;
+        }
+
+        .celebrity-carousel {
+            display: flex;
+            gap: 30px;
+            padding: 0 40px 40px 40px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: var(--gold) transparent;
+        }
+
+        .celebrity-carousel::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .celebrity-carousel::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .celebrity-carousel::-webkit-scrollbar-thumb {
+            background: var(--gold);
+            border-radius: 4px;
+        }
+
+        .celebrity-card {
+            min-width: 400px;
+            flex: 0 0 auto;
+            position: relative;
+            overflow: hidden;
+            border-radius: 2px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .celebrity-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 20px 50px rgba(124, 19, 9, 0.25);
+        }
+
+        .celebrity-card img {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .celebrity-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .celebrity-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to top,
+                rgba(124, 19, 9, 0.95) 0%,
+                rgba(124, 19, 9, 0.5) 50%,
+                transparent 100%
+            );
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 40px;
+            color: var(--white);
+        }
+
+        .celebrity-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .celebrity-title {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--gold);
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .celebrity-quote {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 15px;
+            line-height: 1.6;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .celebrity-card:hover .celebrity-quote {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* GOOGLE REVIEWS */
+        .google-reviews-section {
+            padding: 100px 40px;
+            background-color: var(--cream-bg);
+        }
+
+        .reviews-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .google-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .rating-display {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .rating-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            color: var(--burgundy);
+            font-weight: 600;
+        }
+
+        .stars {
+            color: var(--gold);
+            font-size: 32px;
+            letter-spacing: 5px;
+        }
+
+        .review-count {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .review-card {
+            background: var(--white);
+            padding: 35px;
+            border-radius: 2px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .review-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(124, 19, 9, 0.15);
+        }
+
+        .review-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .reviewer-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--burgundy);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: 700;
+            font-size: 20px;
+        }
+
+        .reviewer-info {
+            flex: 1;
+        }
+
+        .reviewer-name {
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 3px;
+        }
+
+        .review-stars {
+            color: var(--gold);
+            font-size: 16px;
+            letter-spacing: 2px;
+        }
+
+        .review-text {
+            color: #555;
+            line-height: 1.8;
+            font-size: 15px;
+        }
+
+        .review-date {
+            margin-top: 15px;
+            font-size: 12px;
+            color: #999;
+            font-style: italic;
+        }
+
+        /* TIKTOK SECTION */
+        .tiktok-section {
+            padding: 100px 40px;
+            background-color: var(--white);
+        }
+
+        .tiktok-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .tiktok-embed {
+            border-radius: 2px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            background: var(--cream-bg);
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tiktok-placeholder {
+            padding: 40px;
+            text-align: center;
+        }
+
+        .tiktok-placeholder h4 {
+            color: var(--burgundy);
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .tiktok-placeholder p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .embed-code {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+            margin-top: 15px;
+            word-break: break-all;
+            color: var(--burgundy);
+        }
+
+        /* FOOTER */
+        footer {
+            background-color: #111;
+            color: #ccc;
+            text-align: center;
+            padding: 5rem 1rem 3rem;
+            border-top: 3px solid var(--burgundy);
+        }
+
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--white);
+            margin-bottom: 4rem;
+            display: inline-block;
+            letter-spacing: 2px;
+        }
+
+        .footer-details {
+            max-width: 1100px;
+            margin: 0 auto 3rem;
+            font-size: 0.9rem;
+            line-height: 2;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 200px;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section strong {
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-size: 0.8rem;
+            display: block;
+            margin-bottom: 1rem;
+        }
+
+        .contact-number {
+            color: var(--white);
+            font-weight: 700;
+        }
+
+        .copyright {
+            font-size: 0.75rem;
+            opacity: 0.5;
+            border-top: 1px solid #333;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            max-width: 1100px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        @media (max-width: 768px) {
+            .navbar { padding: 1rem; }
+            .nav-links { display: none; }
+            .reviews-hero { height: 50vh; }
+            .reviews-hero h2 { font-size: 40px; }
+            .celebrity-card { 
+                min-width: 300px; 
+            }
+            .celebrity-card img {
+                height: 400px;
+            }
+            .celebrity-name {
+                font-size: 24px;
+            }
+            .reviews-grid { grid-template-columns: 1fr; }
+            .tiktok-grid { grid-template-columns: 1fr; }
+            .footer-details {
+                flex-direction: column;
+                align-items: center;
+                gap: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar"> 
+        <div class="brand-logo">Mezzanine</div> 
+        <div class="nav-links"> 
+            <a href="#" class="nav-link">Home</a> 
+            <div class="nav-dropdown">
+                <a href="cuisine.html" class="nav-link">Cuisine</a>
+
+                <div class="dropdown-menu">
+                    <a href="fine-dining.html">Fine Dining</a>
+                    <a href="a-la-carte.html">À La Carte</a>
+                    <a href="special-offers.html">Special Offers</a>
+                </div>
+            </div>
+            <a href="#" class="nav-link">Gallery</a> 
+            <div class="nav-dropdown">
+                <a href="reservations.html" class="nav-link">Rerservations</a>
+                <div class="dropdown-menu">
+                    <a href="" class="dropdown-link">Book a Table</a>
+                    <a href="" class="dropdown-link">Business Offers</a>
+                    <a href="" class="dropdown-link">Location</a>
+                </div>
+            </div>  
+            <a href="#" class="nav-link">Reviews</a> 
+            <div class="nav-dropdown">
+                <a href="" class="nav-link">About Us</a>
+                <div class="dropdown-menu">
+                    <a href="" class="dropdown-link">Our Ingredients</a>
+                    <a href="" class="dropdown-link">About Our Team</a>
+                </div>
+            </div>   
+            <a href="#" class="nav-link">Contact Us</a> 
+        </div>
+    </nav>
+
+    <section class="reviews-hero">
+        <div class="reviews-hero-content">
+            <h2 class="section-title">What They're Saying</h2>
+            <div class="section-divider"></div>
+            <p>
+                From <strong>distinguished guests</strong> to everyday diners, discover why Mezzanine has become 
+                Manila's most talked-about dining destination for <strong>elevated Filipino-French cuisine</strong>.
+            </p>
+        </div>
+    </section>
+
+    <!-- CELEBRITY GALLERY -->
+    <section class="celebrity-section">
+        <div class="celebrity-section-header">
+            <h2 class="section-title">Notable Guests</h2>
+            <div class="section-divider"></div>
+        </div>
+
+        <div class="celebrity-carousel">
+            <div class="celebrity-card">
+                <img src="padillagutz.jpg" alt="Celebrity Guest">
+                <div class="celebrity-overlay">
+                    <div class="celebrity-name">Mariel Padilla & Ruffa Gutierrez</div>
+                    <div class="celebrity-title">Actress & TV Hosts</div>
+                    <p class="celebrity-quote">
+                        "We indulged in delicious French cuisine, reconnected with dear friends, and had meaningful conversations about business, beauty, food—and Lorin’s exciting plans after she graduates from Pepperdine University in spring 2026. 🥘"
+                    </p>
+                </div>
+            </div>
+
+            <div class="celebrity-card">
+                <img src="lorin.jpg" alt="Celebrity Guest">
+                <div class="celebrity-overlay">
+                    <div class="celebrity-name">Lorin Guttierez</div>
+                    <div class="celebrity-title">Social Media Personality</div>
+                    <p class="celebrity-quote">
+                        "Food was soooo good!"
+                    </p>
+                </div>
+            </div>
+
+            <div class="celebrity-card">
+                <img src="dot.jpg" alt="Celebrity Guest">
+                <div class="celebrity-overlay">
+                    <div class="celebrity-name">Christina Garcia Frasco</div>
+                    <div class="celebrity-title">Department of Tourism Secretary</div>
+                    <p class="celebrity-quote">
+                        "Truly the best of both worlds!"
+                    </p>
+                </div>
+            </div>
+
+            <div class="celebrity-card">
+                <img src="aa.jpg" alt="Celebrity Guest">
+                <div class="celebrity-overlay">
+                    <div class="celebrity-name">Arnel Patawaran</div>
+                    <div class="celebrity-title">Writer</div>
+                    <p class="celebrity-quote">
+                        "A beef Wellington with morel jus and pomme purée softened under its pastry, served with Dassai 45.... More than serving a meal, Chef Loïc narrated a longing. "
+                    </p>
+                </div>
+            </div>
+
+            <div class="celebrity-card">
+                <img src="sarasola.jpg" alt="Celebrity Guest">
+                <div class="celebrity-overlay">
+                    <div class="celebrity-name">Chef Jose Sarasola</div>
+                    <div class="celebrity-title">Chef & Entrepreneur</div>
+                    <p class="celebrity-quote">
+                        "Enjoyed celebrating my birthday at Mezzanine! Something to watch out for."
+                    </p>
+                </div>
+            </div>
+
+            <div class="celebrity-card">
+                <img src="pinky.jpg" alt="Celebrity Guest">
+                <div class="celebrity-overlay">
+                    <div class="celebrity-name">Pinky Tobiana</div>
+                    <div class="celebrity-title">Fashion and Lifestyle Personality</div>
+                    <p class="celebrity-quote">
+                        "Mezzanine isn't just a restaurant—it's an experience that stays with you long after the meal."
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GOOGLE REVIEWS -->
+    <section class="google-reviews-section">
+        <h2 class="section-title">Google Reviews</h2>
+        <div class="section-divider"></div>
+
+        <div class="reviews-container">
+            <div class="google-header">
+                <div class="rating-display">
+                    <div class="rating-number">4.2</div>
+                    <div>
+                        <div class="stars">★★★★</div>
+                        <div class="review-count">Based on 53 reviews</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-avatar">PA</div>
+                        <div class="reviewer-info">
+                            <div class="reviewer-name">Patricia Avellana</div>
+                            <div class="review-stars">★★★★★</div>
+                        </div>
+                    </div>
+                    <p class="review-text">
+                        "Highly recommended for those who appreciate dining with a touch of elegance, Chef Alain Bistrot Brasserie is perfect for any special occasion or a memorable night out. The ambiance was cozy yet sophisticated, adorned with vintage posters and warm lighting that created the perfect atmosphere. The service was exceptional, with our server offering knowledgeable recommendations and ensuring impeccable timing. The food was outstanding—every dish, from appetizers to dessert, was flavorful and beautifully presented. The extensive wine list and creative cocktails further enhanced the evening. A definite 5-star experience!"
+                    </p>
+                    <div class="review-date">2 weeks ago</div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-avatar">GC</div>
+                        <div class="reviewer-info">
+                            <div class="reviewer-name">Geanne Chan</div>
+                            <div class="review-stars">★★★★★</div>
+                        </div>
+                    </div>
+                    <p class="review-text">
+                        "We enjoyed everything we ordered, especially the cheese board, the pastas (their gnocchi a must try!), and the crepe suzette. They also have a good wine selection."
+                    </p>
+                    <div class="review-date">1 month ago</div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-avatar">DM</div>
+                        <div class="reviewer-info">
+                            <div class="reviewer-name">Douglas Mello</div>
+                            <div class="review-stars">★★★★★</div>
+                        </div>
+                    </div>
+                    <p class="review-text">
+                        "Great restaurant in the heart of BGC. We ate so much food and had a wonderful time here. Chef Alain greeted us warmly, and the food was prepared to perfection. It is authentic French cuisine with a great happy hour. Will eat here again!"
+                    </p>
+                    <div class="review-date">3 weeks ago</div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-avatar">KR</div>
+                        <div class="reviewer-info">
+                            <div class="reviewer-name">Kenneth Rosas</div>
+                            <div class="review-stars">★★★★★</div>
+                        </div>
+                    </div>
+                    <p class="review-text">
+                        "We had a fantastic meal at Chef Alain Bistrot Brasserie! The dishes were beautifully prepared and bursting with flavor. The ambiance was charming, and the service was top-notch. Highly recommend this place for a delightful dining experience!"
+                    </p>
+                    <div class="review-date">1 week ago</div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-avatar">MD</div>
+                        <div class="reviewer-info">
+                            <div class="reviewer-name">M De Guzman</div>
+                            <div class="review-stars">★★★★★</div>
+                        </div>
+                    </div>
+                    <p class="review-text">
+                        "We really enjoyed the food and it was a nice place to spend time with friends without too much noise. The staff are very observant, checking if you need anything.
+
+I dropped my wallet and only realized the next day. The staff were able to find it and kept it for me until I claimed it.
+
+I appreciate the warmth, honesty and kindness of your staff."
+                    </p>
+                    <div class="review-date">2 months ago</div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-avatar">RS</div>
+                        <div class="reviewer-info">
+                            <div class="reviewer-name">Rowel Sangalang</div>
+                            <div class="review-stars">★★★★★</div>
+                        </div>
+                    </div>
+                    <p class="review-text">
+                        "Celebrated a special occasion here and it was perfect. The ambiance, the food, and the service all exceeded our expectations."
+                    </p>
+                    <div class="review-date">3 weeks ago</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TIKTOK EMBEDS -->
+    <section class="tiktok-section">
+        <h2 class="section-title">Social Buzz</h2>
+        <div class="section-divider"></div>
+
+        <div class="tiktok-grid">
+            <div class="tiktok-embed">
+                <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@justgotfed/video/7399990591376936200" data-video-id="7399990591376936200" style="max-width: 605px;min-width: 325px;" > <section> <a target="_blank" title="@justgotfed" href="https://www.tiktok.com/@justgotfed?refer=embed">@justgotfed</a> This authentic French restaurant in BGC is a must try! 🇫🇷 Chef Alain Bistrot Brasserie <a title="justgotfed" target="_blank" href="https://www.tiktok.com/tag/justgotfed?refer=embed">#justgotfed</a> @Chef Alain Bistrot Brasserie <a target="_blank" title="♬ original sound  - Just Got Fed" href="https://www.tiktok.com/music/original-sound-Just-Got-Fed-7399990723887909648?refer=embed">♬ original sound  - Just Got Fed</a> </section> </blockquote>
+            </div>
+
+            <div class="tiktok-embed">
+                <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@rianrucio/video/7510926333476654343" data-video-id="7510926333476654343" style="max-width: 605px;min-width: 325px;" > <section> <a target="_blank" title="@rianrucio" href="https://www.tiktok.com/@rianrucio?refer=embed">@rianrucio</a> @The French Bistro has new Power Lunch Sets!  <a title="creatorsearchinsights" target="_blank" href="https://www.tiktok.com/tag/creatorsearchinsights?refer=embed">#creatorsearchinsights</a> <a title="restaurant" target="_blank" href="https://www.tiktok.com/tag/restaurant?refer=embed">#restaurant</a> <a title="foodtiktok" target="_blank" href="https://www.tiktok.com/tag/foodtiktok?refer=embed">#foodtiktok</a> <a title="trending" target="_blank" href="https://www.tiktok.com/tag/trending?refer=embed">#trending</a> <a title="gourmet" target="_blank" href="https://www.tiktok.com/tag/gourmet?refer=embed">#gourmet</a> <a target="_blank" title="♬ original sound - AIDEKLOOK - foodaideals on IG" href="https://www.tiktok.com/music/original-sound-AIDEKLOOK-7510926364409596688?refer=embed">♬ original sound - AIDEKLOOK - foodaideals on IG</a> </section> </blockquote>
+            </div>
+
+            <div class="tiktok-embed">
+                <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@jowwwjowwwww/video/7402456116237536530" data-video-id="7402456116237536530" style="max-width: 605px;min-width: 325px;" > <section> <a target="_blank" title="@jowwwjowwwww" href="https://www.tiktok.com/@jowwwjowwwww?refer=embed">@jowwwjowwwww</a> 2 star Michelin chef pero dito lang sa BGC <a title="foryou" target="_blank" href="https://www.tiktok.com/tag/foryou?refer=embed">#foryou</a> <a title="foodieph" target="_blank" href="https://www.tiktok.com/tag/foodieph?refer=embed">#foodieph</a> <a title="longervideos" target="_blank" href="https://www.tiktok.com/tag/longervideos?refer=embed">#longervideos</a> <a title="chefalainraye" target="_blank" href="https://www.tiktok.com/tag/chefalainraye?refer=embed">#chefalainraye</a> <a title="jowjoweatchoy" target="_blank" href="https://www.tiktok.com/tag/jowjoweatchoy?refer=embed">#jowjoweatchoy</a> <a target="_blank" title="♬ Wes Anderson-esque Cute Acoustic - Kenji Ueda" href="https://www.tiktok.com/music/Wes-Anderson-esque-Cute-Acoustic-6817434137683560450?refer=embed">♬ Wes Anderson-esque Cute Acoustic - Kenji Ueda</a> </section> </blockquote>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-logo">MEZZANINE</div>
+        
+        <div class="footer-details">
+            <div class="footer-section">
+                <strong>Visit Us</strong>
+                <p>Level M, Active Fun Bldg.,<br>9th Avenue Cor. 28th St.,<br>BGC, Taguig City.</p>
+            </div>
+
+            <div class="footer-section">
+                <strong>Opening Hours</strong>
+                <p>Monday to Sunday<br>11:00 AM – 11:00 PM</p>
+            </div>
+
+            <div class="footer-section">
+                <strong>Contact</strong>
+                <p>Connect with us via Call or WhatsApp:<br><span class="contact-number">+63 917 138 3612</span></p>
+            </div>
+        </div>
+
+        <div class="copyright">
+            &copy; 2024 Mezzanine Group. All Rights Reserved.
+        </div>
+    </footer>
+
+    <script>
+        const navbar = document.querySelector('.navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+    <script async src="https://www.tiktok.com/embed.js"></script>
+
+</body>
+</html>
