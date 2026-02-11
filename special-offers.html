@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mezzanine | Elevated Dining</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* ========== CSS CUSTOM PROPERTIES (VARIABLES) ========== */
+        :root {
+            --color-primary: #7C1309;
+            --color-accent: #D6A34F;
+            --color-light: #FFF7EF;
+            --color-white: #FFFFFF;
+            --color-dark: #1a1a1a;
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Lato', sans-serif;
+        }
+
+        /* ========== GLOBAL RESET STYLES ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* ========== BODY BASE STYLES ========== */
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--color-light);
+            color: var(--color-dark);
+            line-height: 1.6;
+        }
+
+        /* ========== TYPOGRAPHY DEFAULTS ========== */
+        h1,
+        h2,
+        h3 {
+            font-family: var(--font-serif);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.3s ease;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* ========== NAVIGATION BAR ========== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.2rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background-color: transparent;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+        }
+
+        .navbar.scrolled {
+            background-color: var(--color-white);
+            padding: 0.8rem 3rem;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+            border-bottom: none;
+        }
+
+        .brand-logo {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--color-white);
+        }
+
+        .navbar.scrolled .brand-logo {
+            color: var(--color-primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            font-weight: 700;
+            color: var(--color-white);
+            position: relative;
+        }
+
+        .navbar.scrolled .nav-link {
+            color: var(--color-dark);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--color-accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-dropdown {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 120%;
+            left: 0;
+            background: var(--color-white);
+            min-width: 200px;
+            padding: 0.8rem 0;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 0.6rem 1.2rem;
+            font-size: 0.75rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--color-dark);
+        }
+
+        .dropdown-menu a:hover {
+            background: var(--color-light);
+            color: var(--color-primary);
+        }
+
+        .nav-dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        /* ========== HERO & PARALLAX SECTIONS ========== */
+        .hero,
+        .parallax-separator {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(rgba(124, 19, 9, 0.25),
+                    rgba(124, 19, 9, 0.25)),
+                rgba(0, 0, 0, 0.25);
+            z-index: 1;
+        }
+
+        /* ========== HERO SECTION SPECIFIC ========== */
+        .hero {
+            height: 100vh;
+            background-image: url("heropic.jpg");
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--color-white);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 5rem;
+            margin-bottom: 0.5rem;
+            font-style: italic;
+        }
+
+        .hero-sub {
+            font-size: 1rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid var(--color-accent);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        /* ========== PARALLAX SEPARATOR SECTIONS ========== */
+        .parallax-separator {
+            height: 50vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .parallax-text {
+            position: relative;
+            z-index: 2;
+            color: var(--color-white);
+            font-family: var(--font-serif);
+            font-size: 2rem;
+            font-style: italic;
+            letter-spacing: 2px;
+            opacity: 0.9;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        /* ========== CALL-TO-ACTION BUTTON ========== */
+        .btn-cta {
+            padding: 1rem 2.5rem;
+            background: transparent;
+            border: 1px solid var(--color-white);
+            color: var(--color-white);
+            text-transform: uppercase;
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-cta:hover {
+            background-color: var(--color-primary);
+            border-color: var(--color-primary);
+        }
+
+        /* ========== COMMON LAYOUT COMPONENTS ========== */
+        .section-padding {
+            padding: 6rem 1.5rem;
+        }
+
+        .wrapper {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            color: var(--color-primary);
+            margin-bottom: 1rem;
+            font-weight: 400;
+        }
+
+        .divider {
+            width: 60px;
+            height: 2px;
+            background-color: var(--color-accent);
+            margin: 0 auto;
+        }
+
+        /* ========== INTRO TEXT BLOCK ========== */
+        .intro-block {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+
+        .intro-block strong {
+            color: var(--color-primary);
+        }
+
+        /* ========== FEATURES SECTION WITH TEXTURED BACKGROUND ========== */
+        .bg-primary {
+            background-color: var(--color-primary);
+            background-image: repeating-linear-gradient(45deg,
+                    transparent,
+                    transparent 10px,
+                    rgba(0, 0, 0, 0.1) 10px,
+                    rgba(0, 0, 0, 0.1) 12px);
+            color: var(--color-white);
+        }
+
+        .bg-primary .section-title {
+            color: var(--color-white);
+        }
+
+        .bg-primary .divider {
+            background-color: var(--color-white);
+            opacity: 0.5;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+            text-align: center;
+        }
+
+        .feature-card {
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--color-accent);
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .feature-icon {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: block;
+            color: var(--color-accent);
+        }
+
+        .feature-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card p {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        /* ========== STORY SECTION (TWO-COLUMN LAYOUT) ========== */
+        .story-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .story-img {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            box-shadow: 15px 15px 0 var(--color-primary);
+        }
+
+        .quote-block {
+            font-family: var(--font-serif);
+            font-size: 1.4rem;
+            font-style: italic;
+            color: var(--color-primary);
+            border-left: 3px solid var(--color-accent);
+            padding-left: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        /* ========== CHEF PROFILES SECTION ========== */
+        .chef-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .chef-profile {
+            text-align: center;
+        }
+
+        .chef-photo {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: filter 0.3s ease;
+            margin-bottom: 1rem;
+        }
+
+        .chef-profile:hover .chef-photo {
+            filter: grayscale(0%);
+        }
+
+        .chef-role {
+            display: block;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--color-primary);
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400&display=swap');
+
+        .offers-hero {
+            height: 60vh;
+            background-image: url("offershero.jpg");
+            /* Use a different image than your main hero */
+        }
+
+        .offers-container {
+            max-width: 800px;
+            margin: -80px auto 100px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .offer-card {
+            background: var(--color-white);
+            padding: 6rem 4rem;
+            margin-bottom: 5rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
+            text-align: center;
+            border: 1px solid rgba(214, 163, 79, 0.2);
+        }
+
+        .offer-accent-text {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.4em;
+            color: var(--color-accent);
+            margin-bottom: 1rem;
+        }
+
+        .offer-title {
+            font-size: 3rem;
+            color: var(--color-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .offer-schedule {
+            font-family: var(--font-sans);
+            font-weight: 300;
+            font-style: italic;
+            color: #666;
+        }
+
+        .offer-divider {
+            margin: 2.5rem auto;
+            width: 150px;
+            height: 1px;
+            background: var(--color-accent);
+            position: relative;
+        }
+
+        .offer-divider span {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 0 10px;
+            color: var(--color-accent);
+        }
+
+        /* Happy Hour Styling */
+        .unlimited-badge {
+            margin: 2rem 0;
+            color: var(--color-primary);
+        }
+
+        .price-currency {
+            font-size: 1.2rem;
+            vertical-align: top;
+            margin-right: 5px;
+        }
+
+        .price-amount {
+            font-family: var(--font-serif);
+            font-size: 4rem;
+            font-weight: 400;
+        }
+
+        .price-suffix {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .offer-subtitle {
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-size: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .offers-list li {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-style: italic;
+        }
+
+        /* Valentine Grid Styling */
+        .valentine-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+            max-width: 600px;
+            margin: 0 auto 4rem;
+        }
+
+        .course-group label {
+            display: block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--color-accent);
+            letter-spacing: 0.2em;
+            margin-bottom: 0.5rem;
+        }
+
+        .course-group p {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            color: var(--color-dark);
+        }
+
+        .offer-footer-details {
+            border-top: 1px solid #eee;
+            padding-top: 3rem;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            text-align: left;
+            align-items: center;
+        }
+
+        .inclusions strong {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 1rem;
+        }
+
+        .inclusions ul li {
+            font-size: 0.9rem;
+            color: #555;
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .inclusions ul li::before {
+            content: "•";
+            color: var(--color-accent);
+            position: absolute;
+            left: 0;
+        }
+
+        .valentine-pricing {
+            text-align: right;
+        }
+
+        .price-tag {
+            font-family: var(--font-serif);
+            font-size: 1.8rem;
+            color: var(--color-primary);
+        }
+
+        .per-person {
+            font-size: 0.8rem;
+            color: #888;
+            margin-top: -5px;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .offer-card {
+                padding: 4rem 1.5rem;
+            }
+
+            .offer-footer-details {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .valentine-pricing {
+                text-align: center;
+                margin-top: 3rem;
+            }
+        }
+
+        .reserve-btn {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 1.2rem 3.5rem;
+            background-color: transparent;
+            /* Start hollow */
+            color: var(--color-primary);
+            border: 1px solid var(--color-primary);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            font-weight: 700;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            z-index: 1;
+        }
+
+        /* The stylish fill effect on hover */
+        .reserve-btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background-color: var(--color-primary);
+            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            z-index: -1;
+        }
+
+        .reserve-btn:hover {
+            background-color: var(--color-primary);
+            color: var(--color-white);
+            letter-spacing: 0.35em;
+            /* Subtle expansion for a "premium" feel */
+            box-shadow: 0 5px 15px rgba(124, 19, 9, 0.15);
+        }
+
+        .reserve-btn:hover::before {
+            left: 0;
+        }
+
+        /* Specific button for Valentine (Red Accent) */
+        .valentine-card .reserve-btn {
+            border-color: var(--color-primary);
+            color: var(--color-primary);
+        }
+
+        .valentine-card .reserve-btn:hover {
+            background-color: var(--color-primary);
+            color: var(--color-white);
+            letter-spacing: 0.35em;
+            /* Subtle expansion for a "premium" feel */
+            box-shadow: 0 5px 15px rgba(124, 19, 9, 0.15);
+        }
+
+
+        /* ========== FOOTER ========== */
+        footer {
+            background-color: #111;
+            color: #ccc;
+            text-align: center;
+            padding: 5rem 1rem 3rem;
+            border-top: 3px solid var(--color-primary);
+        }
+
+        .footer-logo {
+            font-family: var(--font-serif);
+            font-size: 2.5rem;
+            color: var(--color-white);
+            margin-bottom: 4rem;
+            display: inline-block;
+            letter-spacing: 2px;
+        }
+
+        .footer-details {
+            max-width: 1100px;
+            margin: 0 auto 3rem;
+            font-size: 0.9rem;
+            line-height: 2;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 200px;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section strong {
+            color: var(--color-accent);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-size: 0.8rem;
+            display: block;
+            margin-bottom: 1rem;
+        }
+
+        .contact-number {
+            color: var(--color-white);
+            font-weight: 700;
+        }
+
+        .copyright {
+            font-size: 0.75rem;
+            opacity: 0.5;
+            border-top: 1px solid #333;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            max-width: 1100px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ========== RESPONSIVE DESIGN (MOBILE) ========== */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+
+            .story-container {
+                grid-template-columns: 1fr;
+            }
+
+            .chef-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .story-img {
+                height: 300px;
+            }
+
+            .parallax-separator {
+                height: 30vh;
+            }
+
+            .footer-details {
+                flex-direction: column;
+                align-items: center;
+                gap: 3rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="brand-logo">Mezzanine</div>
+        <div class="nav-links">
+            <a href="MezzanineMain.html" class="nav-link">Home</a>
+            <div class="nav-dropdown">
+                <a href="cuisine.html" class="nav-link">Cuisine</a>
+
+                <div class="dropdown-menu">
+                    <a href="fine-dining.html">Fine Dining</a>
+                    <a href="a-la-carte.html">À La Carte</a>
+                    <a href="special-offers.html">Special Offers</a>
+                </div>
+            </div>
+            <a href="gallery.html" class="nav-link">Gallery</a>
+            <div class="nav-dropdown">
+                <a href="reservations.html" class="nav-link">Reservations</a>
+                <div class="dropdown-menu">
+                    <a href="" class="dropdown-link">Book a Table</a>
+                    <a href="" class="dropdown-link">Business Offers</a>
+                    <a href="" class="dropdown-link">Location</a>
+                </div>
+            </div>
+            <a href="reviews.html" class="nav-link">Reviews</a>
+            <div class="nav-dropdown">
+                <a href="" class="nav-link">About Us</a>
+                <div class="dropdown-menu">
+                    <a href="" class="dropdown-link">Our Ingredients</a>
+                    <a href="team.html" class="dropdown-link">About Our Team</a>
+                </div>
+            </div>
+            <a href="contact-us.html" class="nav-link">Contact Us</a>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Special Offers</h1>
+            <div class="hero-sub">Exclusive moments & seasonal flavors</div><br>
+        </div>
+    </header>
+
+    <div class="offers-container wrapper">
+
+        <section class="offer-card happy-hour-card">
+            <div class="offer-accent-text">Sunset Spirits</div>
+            <h2 class="offer-title">Happy Hour</h2>
+            <p class="offer-schedule">Every Evening | 5:00 PM to 11:00 PM</p>
+
+            <div class="offer-divider"><span>◈</span></div>
+
+            <div class="happy-hour-content">
+                <div class="unlimited-badge">
+                    <span class="price-currency">Php</span>
+                    <span class="price-amount">599</span>
+                    <span class="price-suffix">Net</span>
+                </div>
+                <h3 class="offer-subtitle">Unlimited Crafted Cocktails</h3>
+                <ul class="offers-list">
+                    <li>Margarita</li>
+                    <li>Gin & Tonic</li>
+                    <li>Red Sangria</li>
+                </ul>
+                <a href="reservations.html" class="reserve-btn">Join Us</a>
+            </div>
+        </section>
+
+        <section class="offer-card valentine-card">
+            <div class="offer-accent-text">A Celebration of Love</div>
+            <h2 class="offer-title">Valentine Menu Special</h2>
+            <p class="offer-schedule">February 13 and 14, 2026 | 6:00 PM</p>
+
+            <div class="offer-divider"><span>◈</span></div>
+
+            <div class="valentine-grid">
+                <div class="course-group">
+                    <label>Hors d’Oeuvres</label>
+                    <p>Pan Seared Japanese Scallops with Caviar</p>
+                    <p>Baked Irish Oyster Rockefeller</p>
+                </div>
+                <div class="course-group">
+                    <label>Salade</label>
+                    <p>Classic Caesar Salad</p>
+                </div>
+                <div class="course-group">
+                    <label>Potage</label>
+                    <p>Velouté de Champignons</p>
+                </div>
+                <div class="course-group">
+                    <label>Poisson</label>
+                    <p>Seabass with Bell Pepper Sauce</p>
+                </div>
+                <div class="course-group">
+                    <label>Trou Normand</label>
+                    <p>Buco Lychee Sorbet</p>
+                </div>
+                <div class="course-group">
+                    <label>Plat Principal</label>
+                    <p>Roast U.S. Prime Rib in Pepper Sauce</p>
+                </div>
+                <div class="course-group">
+                    <label>Dessert</label>
+                    <p>Panna Cotta</p>
+                </div>
+            </div>
+
+            <div class="offer-footer-details">
+                <div class="inclusions">
+                    <strong>Included in your evening:</strong>
+                    <ul>
+                        <li>Special Valentine Set Menu</li>
+                        <li>Complimentary glass of red or white wine</li>
+                        <li>Red roses for the ladies</li>
+                    </ul>
+                </div>
+                <div class="valentine-pricing">
+                    <p class="price-tag">Php 3,850.00 Net</p>
+                    <p class="per-person">per person</p>
+                    <a href="reservations.html" class="reserve-btn">Secure a Table</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="footer-logo">MEZZANINE</div>
+
+        <div class="footer-details">
+            <div class="footer-section">
+                <strong>Visit Us</strong>
+                <p>Level M, Active Fun Bldg.,<br>9th Avenue Cor. 28th St.,<br>BGC, Taguig City.</p>
+            </div>
+
+            <div class="footer-section">
+                <strong>Opening Hours</strong>
+                <p>Monday to Sunday<br>11:00 AM – 11:00 PM</p>
+            </div>
+
+            <div class="footer-section">
+                <strong>Contact</strong>
+                <p>Connect with us via Call or WhatsApp:<br><span class="contact-number">+63 917 138 3612</span></p>
+            </div>
+        </div>
+
+        <div class="copyright">
+            &copy; 2024 Mezzanine Group. All Rights Reserved.
+        </div>
+    </footer>
+
+    <script>
+        const navbar = document.querySelector('.navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+
+</html>

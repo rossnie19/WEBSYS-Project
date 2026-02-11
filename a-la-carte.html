@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mezzanine | Elevated Dining</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* ========== CSS CUSTOM PROPERTIES (VARIABLES) ========== */
+        :root {
+            --color-primary: #7C1309;
+            --color-accent: #D6A34F;
+            --color-light: #FFF7EF;
+            --color-white: #FFFFFF;
+            --color-dark: #1a1a1a;
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Lato', sans-serif;
+        }
+
+        /* ========== GLOBAL RESET STYLES ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* ========== BODY BASE STYLES ========== */
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--color-light);
+            color: var(--color-dark);
+            line-height: 1.6;
+        }
+
+        /* ========== TYPOGRAPHY DEFAULTS ========== */
+        h1,
+        h2,
+        h3 {
+            font-family: var(--font-serif);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.3s ease;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* ========== NAVIGATION BAR ========== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.2rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background-color: transparent;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+        }
+
+        .navbar.scrolled {
+            background-color: var(--color-white);
+            padding: 0.8rem 3rem;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+            border-bottom: none;
+        }
+
+        .brand-logo {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--color-white);
+        }
+
+        .navbar.scrolled .brand-logo {
+            color: var(--color-primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .nav-link {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            font-weight: 700;
+            color: var(--color-white);
+            position: relative;
+        }
+
+        .navbar.scrolled .nav-link {
+            color: var(--color-dark);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--color-accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-dropdown {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 120%;
+            left: 0;
+            background: var(--color-white);
+            min-width: 200px;
+            padding: 0.8rem 0;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 0.6rem 1.2rem;
+            font-size: 0.75rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--color-dark);
+        }
+
+        .dropdown-menu a:hover {
+            background: var(--color-light);
+            color: var(--color-primary);
+        }
+
+        .nav-dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+
+        /* ========== HERO & PARALLAX SECTIONS ========== */
+        .hero,
+        .parallax-separator {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(rgba(124, 19, 9, 0.25),
+                    rgba(124, 19, 9, 0.25)),
+                rgba(0, 0, 0, 0.25);
+            z-index: 1;
+        }
+
+        /* ========== HERO SECTION SPECIFIC ========== */
+        .hero {
+            height: 100vh;
+            background-image: url("heropic.jpg");
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--color-white);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 5rem;
+            margin-bottom: 0.5rem;
+            font-style: italic;
+        }
+
+        .hero-sub {
+            font-size: 1rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid var(--color-accent);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        /* ========== PARALLAX SEPARATOR SECTIONS ========== */
+        .parallax-separator {
+            height: 50vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .parallax-text {
+            position: relative;
+            z-index: 2;
+            color: var(--color-white);
+            font-family: var(--font-serif);
+            font-size: 2rem;
+            font-style: italic;
+            letter-spacing: 2px;
+            opacity: 0.9;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        /* ========== CALL-TO-ACTION BUTTON ========== */
+        .btn-cta {
+            padding: 1rem 2.5rem;
+            background: transparent;
+            border: 1px solid var(--color-white);
+            color: var(--color-white);
+            text-transform: uppercase;
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-cta:hover {
+            background-color: var(--color-primary);
+            border-color: var(--color-primary);
+        }
+
+        /* ========== COMMON LAYOUT COMPONENTS ========== */
+        .section-padding {
+            padding: 6rem 1.5rem;
+        }
+
+        .wrapper {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            color: var(--color-primary);
+            margin-bottom: 1rem;
+            font-weight: 400;
+        }
+
+        .divider {
+            width: 60px;
+            height: 2px;
+            background-color: var(--color-accent);
+            margin: 0 auto;
+        }
+
+        /* ========== INTRO TEXT BLOCK ========== */
+        .intro-block {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+
+        .intro-block strong {
+            color: var(--color-primary);
+        }
+
+        /* ===== CUISINE INTRO ===== */
+
+        .cuisine-intro {
+            text-align: center;
+            max-width: 850px;
+            margin-bottom: -6rem;
+        }
+
+        .cuisine-intro-text {
+            font-size: 1.05rem;
+            line-height: 1.9;
+            color: var(--color-dark);
+        }
+
+        .cuisine-intro-text strong {
+            color: var(--color-primary);
+        }
+
+
+        /* ========== FEATURES SECTION WITH TEXTURED BACKGROUND ========== */
+        .bg-primary {
+            background-color: var(--color-primary);
+            background-image: repeating-linear-gradient(45deg,
+                    transparent,
+                    transparent 10px,
+                    rgba(0, 0, 0, 0.1) 10px,
+                    rgba(0, 0, 0, 0.1) 12px);
+            color: var(--color-white);
+        }
+
+        .bg-primary .section-title {
+            color: var(--color-white);
+        }
+
+        .bg-primary .divider {
+            background-color: var(--color-white);
+            opacity: 0.5;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+            text-align: center;
+        }
+
+        .feature-card {
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--color-accent);
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .feature-icon {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: block;
+            color: var(--color-accent);
+        }
+
+        .feature-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card p {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        /* ========== STORY SECTION (TWO-COLUMN LAYOUT) ========== */
+        .story-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .story-img {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            box-shadow: 15px 15px 0 var(--color-primary);
+        }
+
+        .quote-block {
+            font-family: var(--font-serif);
+            font-size: 1.4rem;
+            font-style: italic;
+            color: var(--color-primary);
+            border-left: 3px solid var(--color-accent);
+            padding-left: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        /* ========== CHEF PROFILES SECTION ========== */
+        .chef-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .chef-profile {
+            text-align: center;
+        }
+
+        .chef-photo {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: filter 0.3s ease;
+            margin-bottom: 1rem;
+        }
+
+        .chef-profile:hover .chef-photo {
+            filter: grayscale(0%);
+        }
+
+        .chef-role {
+            display: block;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--color-primary);
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        /* ===== CUISINE CARDS ===== */
+
+        .cuisine-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .cuisine-card {
+            position: relative;
+            height: 420px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .cuisine-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .cuisine-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(rgba(0, 0, 0, 0.15),
+                    rgba(0, 0, 0, 0.75));
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 2rem;
+            color: var(--color-white);
+            transition: background 0.4s ease;
+        }
+
+        .cuisine-label {
+            font-size: 0.7rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--color-accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .cuisine-overlay h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .cuisine-btn {
+            align-self: flex-start;
+            padding: 0.6rem 1.4rem;
+            border: 1px solid var(--color-white);
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+
+        .cuisine-btn:hover {
+            background: var(--color-accent);
+            border-color: var(--color-accent);
+            color: var(--color-dark);
+        }
+
+        .cuisine-card:hover .cuisine-img {
+            transform: scale(1.08);
+        }
+
+        .cuisine-card:hover .cuisine-overlay {
+            background: linear-gradient(rgba(124, 19, 9, 0.35),
+                    rgba(0, 0, 0, 0.85));
+        }
+
+        /* ========== À LA CARTE SECTION ========== */
+
+        .alacarte-section {
+            max-width: 800px;
+            margin: -100px auto 100px;
+            background: var(--color-white);
+            padding: 7rem 5rem;
+            position: relative;
+            z-index: 10;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.08);
+            text-align: center;
+        }
+
+        .menu-category {
+            margin-bottom: 5rem;
+        }
+
+        .category-title {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            color: var(--color-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid var(--color-accent);
+            padding-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
+        .category-title span {
+            font-family: var(--font-sans);
+            font-size: 0.7rem;
+            color: #999;
+            letter-spacing: 0.4em;
+        }
+
+        /* THE DOTTED LINE LOGIC */
+        .menu-item-group {
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .menu-item-header {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+        }
+
+        .item-name {
+            font-family: var(--font-serif);
+            font-size: 1.2rem;
+            color: var(--color-dark);
+            white-space: nowrap;
+        }
+
+        .item-dots {
+            flex-grow: 1;
+            border-bottom: 1px dotted #ccc;
+            position: relative;
+            top: -4px;
+        }
+
+        .item-price {
+            font-family: var(--font-sans);
+            font-weight: 700;
+            color: var(--color-primary);
+            font-size: 1.1rem;
+        }
+
+        .item-description {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 1.05rem;
+            color: #666;
+            margin-top: 5px;
+            max-width: 85%;
+            line-height: 1.4;
+        }
+
+        .alacarte-footer {
+            text-align: center;
+            margin-top: 5rem;
+            border-top: 1px solid #eee;
+            padding-top: 3rem;
+        }
+
+        .alacarte-footer p {
+            font-size: 0.8rem;
+            color: #999;
+            margin-bottom: 2rem;
+        }
+
+        /* ========== STYLISH SIGNATURE CTA ========== */
+        .reserve-btn {
+            display: inline-block;
+            text-decoration: none;
+            margin-top: 2rem;
+            padding: 1rem 0;
+            /* Remove side padding for a cleaner line look */
+            color: var(--color-primary);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.4em;
+            font-weight: 700;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* The stylish underline that grows from center */
+        .reserve-btn::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 40px;
+            /* Initial small width */
+            height: 1px;
+            background-color: var(--color-accent);
+            transform: translateX(-50%);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .reserve-btn:hover {
+            color: var(--color-dark);
+            letter-spacing: 0.5em;
+            /* Subtle expansion */
+            transform: translateY(-3px);
+            /* Gentle lift */
+        }
+
+        .reserve-btn:hover::after {
+            width: 100%;
+            /* Line expands to full width of text */
+            background-color: var(--color-primary);
+        }
+
+        /* Adding a "Limited" or "Inquiry" note above it */
+        .alacarte-footer::before {
+            content: 'Experience Mezzanine';
+            display: block;
+            font-family: var(--font-serif);
+            font-style: italic;
+            font-size: 1.2rem;
+            color: var(--color-accent);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .alacarte-section {
+                padding: 4rem 1.5rem;
+                margin-top: 0;
+            }
+
+            .item-name {
+                font-size: 1rem;
+                white-space: normal;
+            }
+
+            .item-dots {
+                display: none;
+            }
+
+            /* Remove dots on small mobile to save space */
+            .menu-item-header {
+                justify-content: space-between;
+            }
+        }
+
+        /* ========== FOOTER ========== */
+        footer {
+            background-color: #111;
+            color: #ccc;
+            text-align: center;
+            padding: 5rem 1rem 3rem;
+            border-top: 3px solid var(--color-primary);
+        }
+
+        .footer-logo {
+            font-family: var(--font-serif);
+            font-size: 2.5rem;
+            color: var(--color-white);
+            margin-bottom: 4rem;
+            display: inline-block;
+            letter-spacing: 2px;
+        }
+
+        .footer-details {
+            max-width: 1100px;
+            margin: 0 auto 3rem;
+            font-size: 0.9rem;
+            line-height: 2;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 200px;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section strong {
+            color: var(--color-accent);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-size: 0.8rem;
+            display: block;
+            margin-bottom: 1rem;
+        }
+
+        .contact-number {
+            color: var(--color-white);
+            font-weight: 700;
+        }
+
+        .copyright {
+            font-size: 0.75rem;
+            opacity: 0.5;
+            border-top: 1px solid #333;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            max-width: 1100px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+
+        /* ========== RESPONSIVE DESIGN (MOBILE) ========== */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+
+            .story-container {
+                grid-template-columns: 1fr;
+            }
+
+            .chef-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .story-img {
+                height: 300px;
+            }
+
+            .parallax-separator {
+                height: 30vh;
+            }
+
+            .footer-details {
+                flex-direction: column;
+                align-items: center;
+                gap: 3rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="brand-logo">Mezzanine</div>
+        <div class="nav-links">
+            <a href="MezzanineMain.html" class="nav-link">Home</a>
+            <div class="nav-dropdown">
+                <a href="cuisine.html" class="nav-link">Cuisine</a>
+
+                <div class="dropdown-menu">
+                    <a href="fine-dining.html">Fine Dining</a>
+                    <a href="a-la-carte.html">À La Carte</a>
+                    <a href="special-offers.html">Special Offers</a>
+                </div>
+            </div>
+            <a href="gallery.html" class="nav-link">Gallery</a>
+            <div class="nav-dropdown">
+                <a href="reservations.html" class="nav-link">Reservations</a>
+                <div class="dropdown-menu">
+                    <a href="" class="dropdown-link">Book a Table</a>
+                    <a href="" class="dropdown-link">Business Offers</a>
+                    <a href="" class="dropdown-link">Location</a>
+                </div>
+            </div>
+            <a href="reviews.html" class="nav-link">Reviews</a>
+            <div class="nav-dropdown">
+                <a href="" class="nav-link">About Us</a>
+                <div class="dropdown-menu">
+                    <a href="" class="dropdown-link">Our Ingredients</a>
+                    <a href="team.html" class="dropdown-link">About Our Team</a>
+                </div>
+            </div>
+            <a href="contact-us.html" class="nav-link">Contact Us</a>
+        </div>
+    </nav>
+
+
+    <header class="hero">
+        <div class="hero-content">
+            <h1>À La Carte</h1>
+            <div class="hero-sub">Signature flavor, individually chosen</div><br>
+        </div>
+    </header>
+
+    <section class="alacarte-section wrapper">
+        <div class="section-header">
+            <h2 class="section-title">Les Sélections</h2>
+            <div class="divider"></div>
+        </div>
+
+        <div class="menu-category">
+            <h3 class="category-title">Potages <span>Soups</span></h3>
+            <div class="menu-item-group">
+                <div class="menu-item-header">
+                    <span class="item-name">Onion Soup</span>
+                    <span class="item-dots"></span>
+                    <span class="item-price">560</span>
+                </div>
+            </div>
+            <div class="menu-item-group">
+                <div class="menu-item-header">
+                    <span class="item-name">Mushroom Soup</span>
+                    <span class="item-dots"></span>
+                    <span class="item-price">460</span>
+                </div>
+            </div>
+            <div class="menu-item-group">
+                <div class="menu-item-header">
+                    <span class="item-name">Seafood Soup</span>
+                    <span class="item-dots"></span>
+                    <span class="item-price">1,350</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="menu-category">
+            <h3 class="category-title">Plats Principaux <span>Mains</span></h3>
+
+            <div class="menu-item-group">
+                <div class="menu-item-header">
+                    <span class="item-name">Steak & Frice</span>
+                    <span class="item-dots"></span>
+                    <span class="item-price">2,950</span>
+                </div>
+                <p class="item-description">Juicy grilled beef served with crispy, golden French fries on the side.</p>
+            </div>
+
+            <div class="menu-item-group">
+                <div class="menu-item-header">
+                    <span class="item-name">Beef Bourguignon with Rice</span>
+                    <span class="item-dots"></span>
+                    <span class="item-price">1,400</span>
+                </div>
+                <p class="item-description">Tender beef simmered in red wine served with fluffy rice and aromatic
+                    vegetables.</p>
+            </div>
+
+            <div class="menu-item-group">
+                <div class="menu-item-header">
+                    <span class="item-name">Beef Salpicao with Rice</span>
+                    <span class="item-dots"></span>
+                    <span class="item-price">1,450</span>
+                </div>
+                <p class="item-description">Tender beef sautéed with garlic, served over fluffy rice, bursting with
+                    savory flavors.</p>
+            </div>
+
+            <div class="menu-item-group">
+                <div class="menu-item-header">
+                    <span class="item-name">Duck Legs</span>
+                    <span class="item-dots"></span>
+                    <span class="item-price">1,800</span>
+                </div>
+                <p class="item-description">Tender, flavorful legs with crispy skin, served with rich sauces and
+                    signature sides.</p>
+            </div>
+
+            <div class="menu-item-group">
+                <div class="menu-item-header">
+                    <span class="item-name">Chicharon Bulaklak with Rice</span>
+                    <span class="item-dots"></span>
+                    <span class="item-price">950</span>
+                </div>
+                <p class="item-description">Crispy, deep-fried pork cracklings served with steamed rice and a spicy
+                    vinegar dip.</p>
+            </div>
+        </div>
+
+        <div class="alacarte-footer">
+            <p>Prices are in PHP and inclusive of VAT. A 10% service charge will be added to your bill.</p>
+            <a href="reservations.html" class="reserve-btn">Book Your Table</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-logo">MEZZANINE</div>
+
+        <div class="footer-details">
+            <div class="footer-section">
+                <strong>Visit Us</strong>
+                <p>Level M, Active Fun Bldg.,<br>9th Avenue Cor. 28th St.,<br>BGC, Taguig City.</p>
+            </div>
+
+            <div class="footer-section">
+                <strong>Opening Hours</strong>
+                <p>Monday to Sunday<br>11:00 AM – 11:00 PM</p>
+            </div>
+
+            <div class="footer-section">
+                <strong>Contact</strong>
+                <p>Connect with us via Call or WhatsApp:<br><span class="contact-number">+63 917 138 3612</span></p>
+            </div>
+        </div>
+
+        <div class="copyright">
+            &copy; 2024 Mezzanine Group. All Rights Reserved.
+        </div>
+    </footer>
+
+    <script>
+        const navbar = document.querySelector('.navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+
+</body>
+
+</html>
