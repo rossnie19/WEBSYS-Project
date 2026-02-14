@@ -56,81 +56,128 @@
 
         /* ========== NAVIGATION BAR ========== */
         .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 1.2rem 3rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-            background-color: transparent;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.4s ease;
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            padding: 1.2rem 3rem; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            z-index: 1000; 
+            background-color: transparent; 
+            border-bottom: 1px solid rgba(255,255,255,0.1); 
+            transition: all 0.4s ease; 
         }
 
         .navbar.scrolled {
-            background-color: var(--color-white);
-            padding: 0.8rem 3rem;
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
-            border-bottom: none;
+            background-color: var(--color-white); 
+            padding: 0.8rem 3rem; 
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05); 
+            border-bottom: none; 
         }
 
         .brand-logo {
-            font-family: var(--font-serif);
-            font-size: 1.5rem;
-            font-weight: 700;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: var(--color-white);
+            font-family: var(--font-serif); 
+            font-size: 1.5rem; 
+            font-weight: 700; 
+            letter-spacing: 0.15em; 
+            text-transform: uppercase; 
+            color: var(--color-white); 
         }
 
         .navbar.scrolled .brand-logo {
-            color: var(--color-primary);
+            color: var(--color-primary); 
         }
 
         .nav-links {
-            display: flex;
-            gap: 2.5rem;
+            display: flex; 
+            gap: 2rem; 
+            align-items: center;
         }
 
         .nav-link {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            font-weight: 700;
-            color: var(--color-white);
-            position: relative;
+            font-size: 0.75rem; 
+            text-transform: uppercase; 
+            letter-spacing: 0.15em; 
+            font-weight: 700; 
+            color: var(--color-white); 
+            position: relative; 
         }
 
         .navbar.scrolled .nav-link {
+            color: var(--color-dark); 
+        }
+
+        .nav-link::after { 
+            content: ''; 
+            position: absolute; 
+            width: 0; 
+            height: 1px; 
+            bottom: -5px; 
+            left: 0; 
+            background-color: var(--color-accent); 
+            transition: width 0.3s ease; 
+        }
+
+        .nav-link:hover::after { width: 100%; } 
+        
+         .nav-dropdown {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 120%;
+            left: 0;
+            background: var(--color-white);
+            min-width: 200px;
+            padding: 0.8rem 0;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 0.6rem 1.2rem;
+            font-size: 0.75rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
             color: var(--color-dark);
         }
 
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 1px;
-            bottom: -5px;
-            left: 0;
-            background-color: var(--color-accent);
-            transition: width 0.3s ease;
+        .dropdown-menu a:hover {
+            background: var(--color-light);
+            color: var(--color-primary);
         }
 
-        .nav-link:hover::after {
-            width: 100%;
+        .nav-dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
         }
 
-        /* ========== HERO & PARALLAX SECTIONS ========== */
-        .hero,
-        .parallax-separator {
-            background-attachment: fixed;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            position: relative;
+        /* ========== HERO SECTION ========== */
+        .hero {
+            height: 70vh; 
+            background-image: url("heropic.jpg"); 
+            background-attachment: fixed; 
+            background-position: center; 
+            background-repeat: no-repeat; 
+            background-size: cover; 
+            position: relative; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            text-align: center; 
+            color: var(--color-white); 
         }
 
         .hero::before {
@@ -138,43 +185,55 @@
             position: absolute;
             inset: 0;
             background:
-                linear-gradient(rgba(124, 19, 9, 0.25),
-                    rgba(124, 19, 9, 0.25)),
-                rgba(0, 0, 0, 0.25);
+                linear-gradient(
+                    rgba(124, 19, 9, 0.3),
+                    rgba(124, 19, 9, 0.3)
+                ),
+                rgba(0, 0, 0, 0.3);
             z-index: 1;
         }
 
-        /* ========== HERO SECTION SPECIFIC ========== */
-        .hero {
-            height: 100vh;
-            background-image: url("heropic.jpg");
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            color: var(--color-white);
-        }
-
         .hero-content {
-            position: relative;
-            z-index: 2;
+            position: relative; 
+            z-index: 2; 
         }
 
         .hero h1 {
-            font-size: 5rem;
-            margin-bottom: 0.5rem;
-            font-style: italic;
+            font-size: 4rem; 
+            margin-bottom: 1rem; 
+            font-style: italic; 
         }
 
         .hero-sub {
-            font-size: 1rem;
-            letter-spacing: 0.3em;
-            text-transform: uppercase;
-            margin-bottom: 3rem;
-            border-bottom: 1px solid var(--color-accent);
-            padding-bottom: 0.5rem;
-            display: inline-block;
+            font-size: 1rem; 
+            letter-spacing: 0.3em; 
+            text-transform: uppercase; 
+            border-bottom: 1px solid var(--color-accent); 
+            padding-bottom: 0.5rem; 
+            display: inline-block; 
+        }
+
+        /* ========== COMMON LAYOUT COMPONENTS ========== */
+        .section-padding { padding: 6rem 1.5rem; } 
+        .wrapper { max-width: 1100px; margin: 0 auto; } 
+        
+        .section-header {
+            text-align: center; 
+            margin-bottom: 3rem; 
+        }
+
+        .section-title {
+            font-size: 2.5rem; 
+            color: var(--color-primary); 
+            margin-bottom: 1rem; 
+            font-weight: 400; 
+        }
+
+        .divider {
+            width: 60px; 
+            height: 2px; 
+            background-color: var(--color-accent); 
+            margin: 0 auto; 
         }
 
         /* ========== PARALLAX SEPARATOR SECTIONS ========== */
@@ -682,15 +741,37 @@
 
 <body>
 
-    <nav class="navbar">
-        <div class="brand-logo">Mezzanine</div>
-        <div class="nav-links">
-            <a href="MezzanineMain.html" class="nav-link">Home</a>
-            <a href="#" class="nav-link">Cuisine</a>
-            <a href="gallery.html" class="nav-link">Gallery</a>
-            <a href="#" class="nav-link">Reservations</a>
-            <a href="#" class="nav-link">Location</a>
-            <a href="contact-us.html" class="nav-link">Contact Us</a>
+    <nav class="navbar"> 
+        <div class="brand-logo">Mezzanine</div> 
+        <div class="nav-links"> 
+            <a href="MezzanineMain.html" class="nav-link">Home</a> 
+            <div class="nav-dropdown">
+                <a href="cuisine.html" class="nav-link">Cuisine</a>
+
+                <div class="dropdown-menu">
+                    <a href="fine-dining.html">Fine Dining</a>
+                    <a href="a-la-carte.html">À La Carte</a>
+                    <a href="special-offers.html">Special Offers</a>
+                </div>
+            </div>
+            <a href="gallery.html" class="nav-link">Gallery</a> 
+            <div class="nav-dropdown">
+                <a href="reservations.html" class="nav-link">Reservations</a>
+                <div class="dropdown-menu">
+                    <a href="book-a-table.html" class="dropdown-link">Book a Table</a>
+                    <a href="business-offers.html" class="dropdown-link">Business Offers</a>
+                    <a href="location.html" class="dropdown-link">Location</a>
+                </div>
+            </div>  
+            <a href="reviews.html" class="nav-link">Reviews</a> 
+            <div class="nav-dropdown">
+                <a href="about-us.html" class="nav-link">About Us</a>
+                <div class="dropdown-menu">
+                    <a href="our-ingredients.html" class="dropdown-link">Our Ingredients</a>
+                    <a href="team.html" class="dropdown-link">About Our Team</a>
+                </div>
+            </div>   
+            <a href="contact-us.html" class="nav-link">Contact Us</a> 
         </div>
     </nav>
 

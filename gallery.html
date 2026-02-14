@@ -10,6 +10,16 @@
 
         
         :root {
+            /* Variables needed for the Navbar (from previous pages) */
+            --color-primary: #7C1309; 
+            --color-accent: #D6A34F; 
+            --color-light: #FFF7EF; 
+            --color-white: #FFFFFF; 
+            --color-dark: #1a1a1a; 
+            --font-serif: 'Playfair Display', serif; 
+            --font-sans: 'Lato', sans-serif; 
+
+            /* Variables used for your Gallery content */
             --burgundy: #7C1309;      
             --gold: #D6A34F;          
             --orange-pop: #FEAA07;    
@@ -30,6 +40,14 @@
 
         h1, h2, h3, h4 { font-family: 'Playfair Display', serif; }
 
+        /* ADD THIS BLOCK BACK IN */
+        a { 
+            text-decoration: none; 
+            color: inherit; 
+            transition: color 0.3s ease; 
+        }
+        ul { list-style: none; }
+
         .section-title {
             font-size: 48px;
             color: var(--burgundy);
@@ -47,229 +65,477 @@
         }
 
        
-        header {
-            background-color: var(--white);
-            padding: 25px 40px;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 4px 12px rgba(124, 19, 9, 0.1);
-            border-top: 5px solid var(--burgundy);
-            display: flex;
-            justify-content: space-between;
+        /* ========== NAVIGATION BAR ========== */
+        .navbar {
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            padding: 1.2rem 3rem; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            z-index: 1000; 
+            background-color: transparent; 
+            border-bottom: 1px solid rgba(255,255,255,0.1); 
+            transition: all 0.4s ease; 
+        }
+
+        .navbar.scrolled {
+            background-color: var(--color-white); 
+            padding: 0.8rem 3rem; 
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05); 
+            border-bottom: none; 
+        }
+
+        .brand-logo {
+            font-family: var(--font-serif); 
+            font-size: 1.5rem; 
+            font-weight: 700; 
+            letter-spacing: 0.15em; 
+            text-transform: uppercase; 
+            color: var(--color-white); 
+        }
+
+        .navbar.scrolled .brand-logo {
+            color: var(--color-primary); 
+        }
+
+        .nav-links {
+            display: flex; 
+            gap: 2rem; 
             align-items: center;
         }
 
-        .logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 32px;
-            font-weight: 700;
-            color: var(--burgundy);
-            letter-spacing: 2px;
-            text-transform: uppercase;
+        .nav-link {
+            font-size: 0.75rem; 
+            text-transform: uppercase; 
+            letter-spacing: 0.15em; 
+            font-weight: 700; 
+            color: var(--color-white); 
+            position: relative; 
         }
 
-        nav ul { display: flex; list-style: none; gap: 40px; }
-        nav a {
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--text-dark);
-            font-weight: 700;
+        .navbar.scrolled .nav-link {
+            color: var(--color-dark); 
+        }
+
+        .nav-link::after { 
+            content: ''; 
+            position: absolute; 
+            width: 0; 
+            height: 1px; 
+            bottom: -5px; 
+            left: 0; 
+            background-color: var(--color-accent); 
+            transition: width 0.3s ease; 
+        }
+
+        .nav-link:hover::after { width: 100%; } 
+        
+         .nav-dropdown {
             position: relative;
-            text-decoration: none;
+            display: flex;
+            align-items: center;
         }
 
-        nav a.active { color: var(--burgundy); }
+        .dropdown-menu {
+            position: absolute;
+            top: 120%;
+            left: 0;
+            background: var(--color-white);
+            min-width: 200px;
+            padding: 0.8rem 0;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
 
-        /* INTRO SECTION */
-        .gallery-intro {
-            padding: 80px 20px 40px;
+        .dropdown-menu a {
+            display: block;
+            padding: 0.6rem 1.2rem;
+            font-size: 0.75rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--color-dark);
+        }
+
+        .dropdown-menu a:hover {
+            background: var(--color-light);
+            color: var(--color-primary);
+        }
+
+        .nav-dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        /* PARALLAX HERO */
+        .gallery-hero {
+            height: 60vh;
+            background-image: url("heropic.jpg");
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gallery-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(
+                    rgba(124, 19, 9, 0.25),
+                    rgba(124, 19, 9, 0.25)
+                ),
+                rgba(0, 0, 0, 0.25);
+            z-index: 1;
+        }
+
+        .gallery-hero-content {
+            position: relative;
+            z-index: 2;
             text-align: center;
+            color: var(--white);
         }
 
-        .gallery-intro p {
+        .gallery-hero h2 {
+            font-size: 60px;
+            color: var(--white);
+            margin-bottom: 20px;
+        }
+
+        .gallery-hero .section-divider {
+            background-color: var(--gold);
+            opacity: 0.9;
+        }
+
+        .gallery-hero p {
             max-width: 700px;
-            margin: 0 auto;
+            margin: 30px auto 0;
             font-size: 19px;
-            color: #444;
+            color: var(--white);
             font-weight: 300;
             line-height: 1.6;
         }
 
-        .gallery-intro strong {
-            color: var(--burgundy);
+        .gallery-hero strong {
+            color: var(--gold);
         }
 
         
         .food-gallery-wrapper {
-            padding: 40px 0 80px;
+            padding: 80px 0;
             background-color: var(--white);
         }
 
-        .slider-container {
-            display: flex;
-            overflow-x: auto;
-            gap: 20px;
-            padding: 0 40px 40px 40px;
-            scrollbar-width: thin;
-            scrollbar-color: var(--gold) transparent;
+        .food-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 50px;
         }
 
         .food-item {
-            min-width: 320px;
-            flex: 0 0 auto;
-            position: relative;
-            text-align: center;
+            background: var(--cream-bg);
+            border-radius: 2px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .food-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(124, 19, 9, 0.15);
         }
 
         .food-item img {
             width: 100%;
-            height: 450px;
+            height: 350px;
             object-fit: cover;
-            border-radius: 2px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: block;
         }
 
-        .minimal-caption {
-            margin-top: 15px;
-            font-family: 'Lato', sans-serif;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+        .food-info {
+            padding: 30px;
+        }
+
+        .dish-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
             color: var(--burgundy);
-            font-weight: 700;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .dish-description {
+            font-family: 'Lato', sans-serif;
+            font-size: 14px;
+            line-height: 1.7;
+            color: #555;
+            font-weight: 300;
         }
 
        
         .restaurant-gallery-wrapper {
-            max-width: 1100px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 100px 20px;
+            padding: 100px 40px;
         }
 
         .moments-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 40px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            grid-auto-rows: 300px;
         }
 
         .moment-card {
-            background: var(--white);
-            padding: 20px;
-            box-shadow: 15px 15px 0px var(--burgundy); 
+            position: relative;
+            overflow: hidden;
+            border-radius: 2px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .moment-card:hover {
+            transform: scale(1.02);
+        }
+
+        .moment-card:nth-child(1) {
+            grid-column: span 2;
+            grid-row: span 2;
+        }
+
+        .moment-card:nth-child(4) {
+            grid-column: span 2;
         }
 
         .moment-card img {
             width: 100%;
-            height: 400px;
+            height: 100%;
             object-fit: cover;
-            margin-bottom: 20px;
+            transition: filter 0.3s ease;
+        }
+
+        .moment-card:hover img {
+            filter: brightness(0.7);
         }
 
         .moment-desc {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 30px;
+            background: linear-gradient(to top, rgba(124, 19, 9, 0.95), transparent);
             font-family: 'Playfair Display', serif;
             font-style: italic;
-            font-size: 18px;
-            color: #444;
-            text-align: center;
+            font-size: 20px;
+            color: var(--white);
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .moment-card:hover .moment-desc {
+            transform: translateY(0);
         }
 
         
         footer {
-            background-color: var(--burgundy);
-            color: var(--white);
-            padding: 80px 20px 30px;
+            background-color: #111;
+            color: #ccc;
             text-align: center;
-            border-top: 5px solid var(--gold);
+            padding: 5rem 1rem 3rem;
+            border-top: 3px solid var(--burgundy);
         }
 
         .footer-logo {
             font-family: 'Playfair Display', serif;
-            font-size: 48px;
-            margin-bottom: 30px;
-            display: block;
-            color: var(--gold);
-        }
-
-        .footer-links {
-            margin-bottom: 40px;
-        }
-
-        .footer-links a {
-            margin: 0 15px;
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-size: 2.5rem;
             color: var(--white);
-            text-decoration: none;
+            margin-bottom: 4rem;
+            display: inline-block;
+            letter-spacing: 2px;
+        }
+
+        .footer-details {
+            max-width: 1100px;
+            margin: 0 auto 3rem;
+            font-size: 0.9rem;
+            line-height: 2;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 200px;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section strong {
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-size: 0.8rem;
+            display: block;
+            margin-bottom: 1rem;
+        }
+
+        .contact-number {
+            color: var(--white);
+            font-weight: 700;
         }
 
         .copyright {
-            font-size: 12px;
-            opacity: 0.6;
-            margin-top: 40px;
+            font-size: 0.75rem;
+            opacity: 0.5;
+            border-top: 1px solid #333;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            max-width: 1100px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         @media (max-width: 768px) {
-            .moments-grid { grid-template-columns: 1fr; }
-            .food-item { min-width: 280px; }
+            .navbar { padding: 1rem; }
+            .nav-links { display: none; }
+            .moments-grid { 
+                grid-template-columns: 1fr;
+                grid-auto-rows: 250px;
+            }
+            .moment-card:nth-child(1),
+            .moment-card:nth-child(4) {
+                grid-column: span 1;
+                grid-row: span 1;
+            }
+            .food-grid { 
+                grid-template-columns: 1fr;
+                padding: 0 20px;
+            }
+            .gallery-hero {
+                height: 50vh;
+            }
+            .gallery-hero h2 {
+                font-size: 40px;
+            }
+            .footer-details {
+                flex-direction: column;
+                align-items: center;
+                gap: 3rem;
+            }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="logo">Mezzanine</div>
-        <nav>
-            <ul>
-                <li><a href="main.html">Home</a></li>
-                <li><a href="#">Cuisine</a></li>
-                <li><a href="#" class="active">Gallery</a></li>
-                <li><a href="#">Reservations</a></li>
-                <li><a href="#">Location</a></li>
-            </ul>
-        </nav>
-    </header>
+    <nav class="navbar"> 
+        <div class="brand-logo">Mezzanine</div> 
+        <div class="nav-links"> 
+            <a href="MezzanineMain.html" class="nav-link">Home</a> 
+            <div class="nav-dropdown">
+                <a href="cuisine.html" class="nav-link">Cuisine</a>
 
-    <section class="gallery-intro">
-        <h2 class="section-title">A Feast for the Senses</h2>
-        <div class="section-divider"></div>
-        <p>
-            Welcome to the Mezzanine's visual journal. From the meticulous <strong>French techniques</strong> 
-            applied to heritage <strong>Filipino ingredients</strong>, to the candid, "human" moments 
-            that define our service—explore the artistry behind our craft.
-        </p>
+                <div class="dropdown-menu">
+                    <a href="fine-dining.html">Fine Dining</a>
+                    <a href="a-la-carte.html">À La Carte</a>
+                    <a href="special-offers.html">Special Offers</a>
+                </div>
+            </div>
+            <a href="gallery.html" class="nav-link">Gallery</a> 
+            <div class="nav-dropdown">
+                <a href="reservations.html" class="nav-link">Reservations</a>
+                <div class="dropdown-menu">
+                    <a href="book-a-table.html" class="dropdown-link">Book a Table</a>
+                    <a href="business-offers.html" class="dropdown-link">Business Offers</a>
+                    <a href="location.html" class="dropdown-link">Location</a>
+                </div>
+            </div>  
+            <a href="reviews.html" class="nav-link">Reviews</a> 
+            <div class="nav-dropdown">
+                <a href="about-us.html" class="nav-link">About Us</a>
+                <div class="dropdown-menu">
+                    <a href="our-ingredients.html" class="dropdown-link">Our Ingredients</a>
+                    <a href="team.html" class="dropdown-link">About Our Team</a>
+                </div>
+            </div>   
+            <a href="contact-us.html" class="nav-link">Contact Us</a> 
+        </div>
+    </nav>
+    
+    <section class="gallery-hero">
+        <div class="gallery-hero-content">
+            <h2 class="section-title">A Feast for the Senses</h2>
+            <div class="section-divider"></div>
+            <p>
+                Welcome to the Mezzanine's visual journal. From the meticulous <strong>French techniques</strong> 
+                applied to heritage <strong>Filipino ingredients</strong>, to the candid, "human" moments 
+                that define our service—explore the artistry behind our craft.
+            </p>
+        </div>
     </section>
 
     <div class="food-gallery-wrapper">
         <h2 class="section-title">Food Gallery</h2>
         <div class="section-divider"></div>
         
-        <div class="slider-container">
+        <div class="food-grid">
             <div class="food-item">
-                <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=600" alt="Dish">
-                <p class="minimal-caption">Adobo Confit</p>
+                <img src="gambas.jpg" alt="Adobo Confit">
+                <div class="food-info">
+                    <h3 class="dish-name">Gambas Sautées à L'ail et au Piment</h3>
+                    <p class="dish-description">Juicy prawns sautéed with garlic and chili, perfectly balanced for a flavorful bite. </p>
+                </div>
             </div>
             <div class="food-item">
-                <img src="https://images.unsplash.com/photo-1546039907-7fa05f864c02?auto=format&fit=crop&w=600" alt="Dish">
-                <p class="minimal-caption">Sinigang Bouillabaisse</p>
+                <img src="cured.jpg" alt="Sinigang Bouillabaisse">
+                <div class="food-info">
+                    <h3 class="dish-name">Cured Meats</h3>
+                    <p class="dish-description">Assorted salted and dried meats, served with cheese and pickles for extra flavor.</p>
+                </div>
             </div>
             <div class="food-item">
-                <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=600" alt="Dish">
-                <p class="minimal-caption">Wagyu Bistek</p>
+                <img src="canard.jpg" alt="Wagyu Bistek">
+                <div class="food-info">
+                    <h3 class="dish-name">Cuisse de Canard Confit</h3>
+                    <p class="dish-description">Features tender, slow-cooked duck leg, served with a rich lentil ragout and a flavorful red wine jus.</p>
+                </div>
             </div>
             <div class="food-item">
-                <img src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=600" alt="Dish">
-                <p class="minimal-caption">Ube Soufflé</p>
+                <img src="salmon.jpg" alt="Ube Soufflé">
+                <div class="food-info">
+                    <h3 class="dish-name">Saumon au Beurre Blanc à L'orange</h3>
+                    <p class="dish-description">Tender salmon topped with orange butter sauce, crafted to delight every bite.</p>
+                </div>
             </div>
             <div class="food-item">
-                <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=600" alt="Dish">
-                <p class="minimal-caption">Fresh Harvest Ensalada</p>
+                <img src="salad.png" alt="Fresh Harvest Ensalada">
+                <div class="food-info">
+                    <h3 class="dish-name">Salade de Foie Gras</h3>
+                    <p class="dish-description">A fresh, flavorful plate that satisfies without feeling heavy.</p>
+                </div>
             </div>
             <div class="food-item">
-                <img src="https://images.unsplash.com/photo-1583394838336-acd977736f90?auto=format&fit=crop&w=600" alt="Dish">
-                <p class="minimal-caption">Scallops & Saffron</p>
+                <img src="spag.png" alt="Scallops & Saffron">
+                <div class="food-info">
+                    <h3 class="dish-name">Spaghetti a'la Bolognaise</h3>
+                    <p class="dish-description">A rich meaty hug in every bite - crafted with slow-simmered beef, ripe tomatoes, and authentic Italian herbs.</p>
+                </div>
             </div>
         </div>
     </div>
@@ -299,20 +565,40 @@
     </section>
 
     <footer>
-        <span class="footer-logo">MEZZANINE</span>
-        <div class="footer-links">
-            <a href="main.html">Home</a>
-            <a href="#">Cuisine</a>
-            <a href="#">Gallery</a>
-            <a href="#">Reservations</a>
-            <a href="#">Location</a>
+        <div class="footer-logo">MEZZANINE</div>
+        
+        <div class="footer-details">
+            <div class="footer-section">
+                <strong>Visit Us</strong>
+                <p>Level M, Active Fun Bldg.,<br>9th Avenue Cor. 28th St.,<br>BGC, Taguig City.</p>
+            </div>
+
+            <div class="footer-section">
+                <strong>Opening Hours</strong>
+                <p>Monday to Sunday<br>11:00 AM – 11:00 PM</p>
+            </div>
+
+            <div class="footer-section">
+                <strong>Contact</strong>
+                <p>Connect with us via Call or WhatsApp:<br><span class="contact-number">+63 917 138 3612</span></p>
+            </div>
         </div>
-        <p>9th Avenue Cor. 28th St., BGC, Taguig City, Philippines</p>
-        <p style="color: var(--gold); margin-top: 10px;">+63 917 138 3612</p>
+
         <div class="copyright">
-            &copy; 2024 Mezzanine. All Rights Reserved.
+            &copy; 2024 Mezzanine Group. All Rights Reserved.
         </div>
     </footer>
+
+    <script>
+        const navbar = document.querySelector('.navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
 
 </body>
 </html>

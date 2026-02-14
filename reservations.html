@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mezzanine | Reservations</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        /* ========== CSS CUSTOM PROPERTIES (VARIABLES) ========== */
+        :root {
+            --color-primary: #7C1309;
+            --color-accent: #D6A34F;
+            --color-light: #FFF7EF;
+            --color-white: #FFFFFF;
+            --color-dark: #1a1a1a;
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Lato', sans-serif;
+        }
+
+        /* ========== GLOBAL RESET STYLES ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* ========== BODY BASE STYLES ========== */
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--color-light);
+            color: var(--color-dark);
+            line-height: 1.6;
+        }
+
+        /* ========== TYPOGRAPHY DEFAULTS ========== */
+        h1, h2, h3 { font-family: var(--font-serif); }
+        a { text-decoration: none; color: inherit; transition: color 0.3s ease; }
+        ul { list-style: none; }
+
+        /* ========== NAVIGATION BAR ========== */
+        .navbar {
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            padding: 1.2rem 3rem; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            z-index: 1000; 
+            background-color: transparent; 
+            border-bottom: 1px solid rgba(255,255,255,0.1); 
+            transition: all 0.4s ease; 
+        }
+
+        .navbar.scrolled {
+            background-color: var(--color-white); 
+            padding: 0.8rem 3rem; 
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05); 
+            border-bottom: none; 
+        }
+
+        .brand-logo {
+            font-family: var(--font-serif); 
+            font-size: 1.5rem; 
+            font-weight: 700; 
+            letter-spacing: 0.15em; 
+            text-transform: uppercase; 
+            color: var(--color-white); 
+        }
+
+        .navbar.scrolled .brand-logo { color: var(--color-primary); }
+
+        .nav-links {
+            display: flex; 
+            gap: 2rem; 
+            align-items: center;
+        }
+
+        .nav-link {
+            font-size: 0.75rem; 
+            text-transform: uppercase; 
+            letter-spacing: 0.15em; 
+            font-weight: 700; 
+            color: var(--color-white); 
+            position: relative; 
+        }
+
+        .navbar.scrolled .nav-link { color: var(--color-dark); }
+
+        .nav-link::after { 
+            content: ''; 
+            position: absolute; 
+            width: 0; 
+            height: 1px; 
+            bottom: -5px; 
+            left: 0; 
+            background-color: var(--color-accent); 
+            transition: width 0.3s ease; 
+        }
+
+        .nav-link:hover::after { width: 100%; } 
+        
+        .nav-dropdown {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 120%;
+            left: 0;
+            background: var(--color-white);
+            min-width: 200px;
+            padding: 0.8rem 0;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 0.6rem 1.2rem;
+            font-size: 0.75rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--color-dark);
+        }
+
+        .dropdown-menu a:hover {
+            background: var(--color-light);
+            color: var(--color-primary);
+        }
+
+        .nav-dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        /* ========== HERO SECTION ========== */
+        .hero {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: relative;
+            height: 60vh;
+            background-image: url("heropic.jpg"); 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--color-white);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(rgba(124, 19, 9, 0.25), rgba(124, 19, 9, 0.25)),
+                rgba(0, 0, 0, 0.25);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 0.5rem;
+            font-style: italic;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .hero-sub {
+            font-size: 0.9rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--color-accent);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        /* ========== COMMON LAYOUT COMPONENTS ========== */
+        .section-padding { padding: 6rem 1.5rem; }
+        .wrapper { max-width: 1100px; margin: 0 auto; }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            color: var(--color-primary);
+            margin-bottom: 1rem;
+            font-weight: 400;
+        }
+
+        .divider {
+            width: 60px;
+            height: 2px;
+            background-color: var(--color-accent);
+            margin: 0 auto;
+        }
+
+        /* ===== HUB INTRO SECTION ===== */
+        .hub-intro {
+            text-align: center;
+            max-width: 850px;
+            margin: 0 auto 3rem;
+        }
+
+        .hub-intro-text {
+            font-size: 1.05rem;
+            line-height: 1.9;
+            color: var(--color-dark);
+        }
+
+        .hub-intro-text strong {
+            color: var(--color-primary);
+        }
+
+        /* ===== TEXT-ONLY CARDS GRID ===== */
+        .text-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            margin-top: 2rem;
+        }
+
+        .text-card {
+            background-color: var(--color-white);
+            padding: 4rem 2.5rem;
+            text-align: center;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .text-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--color-accent);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .text-card-label {
+            font-size: 0.75rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--color-accent);
+            margin-bottom: 1rem;
+        }
+
+        .text-card h3 {
+            font-size: 2rem;
+            color: var(--color-primary);
+            margin-bottom: 1rem;
+        }
+
+        .text-card p {
+            font-size: 0.95rem;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 2.5rem;
+        }
+
+        .text-card-btn {
+            padding: 0.8rem 2rem;
+            border: 1px solid var(--color-primary);
+            color: var(--color-primary);
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+
+        .text-card-btn:hover {
+            background: var(--color-primary);
+            color: var(--color-white);
+        }
+
+        /* ========== FOOTER ========== */
+        footer {
+            background-color: #111;
+            color: #ccc;
+            text-align: center;
+            padding: 5rem 1rem 3rem;
+            border-top: 3px solid var(--color-primary);
+        }
+
+        .footer-logo {
+            font-family: var(--font-serif);
+            font-size: 2.5rem;
+            color: var(--color-white);
+            margin-bottom: 4rem;
+            display: inline-block;
+            letter-spacing: 2px;
+        }
+
+        .footer-details {
+            max-width: 1100px;
+            margin: 0 auto 3rem;
+            font-size: 0.9rem;
+            line-height: 2;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 200px;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section strong {
+            color: var(--color-accent);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-size: 0.8rem;
+            display: block;
+            margin-bottom: 1rem;
+        }
+
+        .contact-number {
+            color: var(--color-white);
+            font-weight: 700;
+        }
+
+        .copyright {
+            font-size: 0.75rem;
+            opacity: 0.5;
+            border-top: 1px solid #333;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            max-width: 1100px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ========== RESPONSIVE DESIGN (MOBILE) ========== */
+        @media (max-width: 768px) {
+            .navbar { padding: 1rem; }
+            .nav-links { display: none; }
+            .hero h1 { font-size: 3rem; }
+            .text-cards-grid { grid-template-columns: 1fr; }
+            .footer-details {
+                flex-direction: column;
+                align-items: center;
+                gap: 3rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar"> 
+        <div class="brand-logo">Mezzanine</div> 
+        <div class="nav-links"> 
+            <a href="MezzanineMain.html" class="nav-link">Home</a> 
+            <div class="nav-dropdown">
+                <a href="cuisine.html" class="nav-link">Cuisine</a>
+                <div class="dropdown-menu">
+                    <a href="fine-dining.html">Fine Dining</a>
+                    <a href="a-la-carte.html">À La Carte</a>
+                    <a href="special-offers.html">Special Offers</a>
+                </div>
+            </div>
+            <a href="gallery.html" class="nav-link">Gallery</a> 
+            
+            <div class="nav-dropdown">
+                <a href="reservations.html" class="nav-link">Reservations</a>
+                <div class="dropdown-menu">
+                    <a href="book-a-table.html" class="dropdown-link">Book a Table</a>
+                    <a href="business-offers.html" class="dropdown-link">Business Offers</a>
+                    <a href="location.html" class="dropdown-link">Location</a>
+                </div>
+            </div>  
+            
+            <a href="reviews.html" class="nav-link">Reviews</a> 
+            <div class="nav-dropdown">
+                <a href="about-us.html" class="nav-link">About Us</a>
+                <div class="dropdown-menu">
+                    <a href="our-ingredients.html" class="dropdown-link">Our Ingredients</a>
+                    <a href="team.html" class="dropdown-link">About Our Team</a>
+                </div>
+            </div>   
+            <a href="contact-us.html" class="nav-link">Contact Us</a> 
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Reservations</h1>
+            <div class="hero-sub">Secure your seat at our table.</div><br>
+        </div>
+    </header>
+
+    <section class="section-padding wrapper">
+        
+        <div class="hub-intro">
+            <div class="section-header">
+                <h2 class="section-title">Join Us</h2>
+                <div class="divider"></div>
+            </div>
+            <p class="hub-intro-text">
+                Whether it's an intimate dinner, a corporate gathering, or simply finding your way to our doors, 
+                we are here to ensure your experience is seamless. Choose an option below to <strong>book your table</strong>, 
+                explore our <strong>business packages</strong>, or view our <strong>location</strong>.
+            </p>
+        </div>
+
+        <div class="text-cards-grid">
+
+            <div class="text-card">
+                <div class="text-card-label">Dine With Us</div>
+                <h3>Book a Table</h3>
+                <p>Reserve your spot for an unforgettable dining experience of French and Filipino culinary artistry.</p>
+                <a href="book-a-table.html" class="text-card-btn">Reserve Now</a>
+            </div>
+
+            <div class="text-card">
+                <div class="text-card-label">Private & Corporate</div>
+                <h3>Business Offers</h3>
+                <p>Tailored packages and exclusive venue hire perfect for your corporate events and private gatherings.</p>
+                <a href="business-offers.html" class="text-card-btn">View Packages</a>
+            </div>
+
+            <div class="text-card">
+                <div class="text-card-label">Find Us</div>
+                <h3>Location</h3>
+                <p>Get accurate directions, parking information, and contact details for our BGC restaurant.</p>
+                <a href="location.html" class="text-card-btn">Get Directions</a>
+            </div>
+
+        </div>
+
+    </section>
+
+    <footer>
+        <div class="footer-logo">MEZZANINE</div>
+
+        <div class="footer-details">
+            <div class="footer-section">
+                <strong>Visit Us</strong>
+                <p>Level M, Active Fun Bldg.,<br>9th Avenue Cor. 28th St.,<br>BGC, Taguig City.</p>
+            </div>
+
+            <div class="footer-section">
+                <strong>Opening Hours</strong>
+                <p>Monday to Sunday<br>11:00 AM – 11:00 PM</p>
+            </div>
+
+            <div class="footer-section">
+                <strong>Contact</strong>
+                <p>Connect with us via Call or WhatsApp:<br><span class="contact-number">+63 917 138 3612</span></p>
+            </div>
+        </div>
+
+        <div class="copyright">
+            &copy; 2024 Mezzanine Group. All Rights Reserved.
+        </div>
+    </footer>
+
+    <script>
+        const navbar = document.querySelector('.navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+
+</html>
