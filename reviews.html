@@ -173,62 +173,58 @@
         }
 
 
-        /* PARALLAX HERO */
-        .reviews-hero {
-            height: 60vh;
-            background-image: url("heropic.jpg");
+        /* PARALLAX HERO - COPIED FROM CUISINE */
+        .hero,
+        .parallax-separator {
             background-attachment: fixed;
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
             position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
-        .reviews-hero::before {
+        .hero::before {
             content: '';
             position: absolute;
             inset: 0;
             background:
-                linear-gradient(
-                    rgba(124, 19, 9, 0.25),
-                    rgba(124, 19, 9, 0.25)
-                ),
+                linear-gradient(rgba(124, 19, 9, 0.25),
+                    rgba(124, 19, 9, 0.25)),
                 rgba(0, 0, 0, 0.25);
             z-index: 1;
         }
 
-        .reviews-hero-content {
+        /* ========== HERO SECTION SPECIFIC ========== */
+        .hero {
+            height: 100vh;
+            background-image: url("heropic.jpg");
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--color-white);
+        }
+
+        .hero-content {
             position: relative;
             z-index: 2;
-            text-align: center;
-            color: var(--white);
         }
 
-        .reviews-hero h2 {
-            font-size: 60px;
-            color: var(--white);
-            margin-bottom: 20px;
+        .hero h1 {
+            font-size: 5rem;
+            margin-bottom: 0.5rem;
+            font-style: italic;
         }
 
-        .reviews-hero .section-divider {
-            background-color: var(--gold);
-            opacity: 0.9;
-        }
-
-        .reviews-hero p {
-            max-width: 700px;
-            margin: 30px auto 0;
-            font-size: 19px;
-            color: var(--white);
-            font-weight: 300;
-            line-height: 1.6;
-        }
-
-        .reviews-hero strong {
-            color: var(--gold);
+        .hero-sub {
+            font-size: 1rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid var(--color-accent);
+            padding-bottom: 0.5rem;
+            display: inline-block;
         }
 
         /* CELEBRITY GALLERY */
@@ -570,8 +566,9 @@
         @media (max-width: 768px) {
             .navbar { padding: 1rem; }
             .nav-links { display: none; }
-            .reviews-hero { height: 50vh; }
-            .reviews-hero h2 { font-size: 40px; }
+            .hero h1 {
+                font-size: 3rem;
+            }
             .celebrity-card { 
                 min-width: 300px; 
             }
@@ -627,16 +624,12 @@
         </div>
     </nav>
 
-    <section class="reviews-hero">
-        <div class="reviews-hero-content">
-            <h2 class="section-title">What They're Saying</h2>
-            <div class="section-divider"></div>
-            <p>
-                From <strong>distinguished guests</strong> to everyday diners, discover why Mezzanine has become 
-                Manila's most talked-about dining destination for <strong>elevated Filipino-French cuisine</strong>.
-            </p>
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Reviews</h1>
+            <div class="hero-sub">Elegance shaped by culture, flavor shaped by home.</div><br>
         </div>
-    </section>
+    </header>
 
     <section class="celebrity-section">
         <div class="celebrity-section-header">
@@ -651,7 +644,7 @@
                     <div class="celebrity-name">Mariel Padilla & Ruffa Gutierrez</div>
                     <div class="celebrity-title">Actress & TV Hosts</div>
                     <p class="celebrity-quote">
-                        "We indulged in delicious French cuisine, reconnected with dear friends, and had meaningful conversations about business, beauty, food—and Lorin’s exciting plans after she graduates from Pepperdine University in spring 2026. 🥘"
+                        "We indulged in delicious French cuisine, reconnected with dear friends, and had meaningful conversations about business, beauty, food—and Lorin's exciting plans after she graduates from Pepperdine University in spring 2026. 🥘"
                     </p>
                 </div>
             </div>
