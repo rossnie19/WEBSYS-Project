@@ -174,62 +174,58 @@
             transform: translateY(0);
         }
 
-        /* PARALLAX HERO */
-        .gallery-hero {
-            height: 60vh;
-            background-image: url("heropic.jpg");
+        /* PARALLAX HERO - COPIED FROM CUISINE */
+        .hero,
+        .parallax-separator {
             background-attachment: fixed;
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
             position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
-        .gallery-hero::before {
+        .hero::before {
             content: '';
             position: absolute;
             inset: 0;
             background:
-                linear-gradient(
-                    rgba(124, 19, 9, 0.25),
-                    rgba(124, 19, 9, 0.25)
-                ),
+                linear-gradient(rgba(124, 19, 9, 0.25),
+                    rgba(124, 19, 9, 0.25)),
                 rgba(0, 0, 0, 0.25);
             z-index: 1;
         }
 
-        .gallery-hero-content {
+        /* ========== HERO SECTION SPECIFIC ========== */
+        .hero {
+            height: 100vh;
+            background-image: url("heropic.jpg");
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--color-white);
+        }
+
+        .hero-content {
             position: relative;
             z-index: 2;
-            text-align: center;
-            color: var(--white);
         }
 
-        .gallery-hero h2 {
-            font-size: 60px;
-            color: var(--white);
-            margin-bottom: 20px;
+        .hero h1 {
+            font-size: 5rem;
+            margin-bottom: 0.5rem;
+            font-style: italic;
         }
 
-        .gallery-hero .section-divider {
-            background-color: var(--gold);
-            opacity: 0.9;
-        }
-
-        .gallery-hero p {
-            max-width: 700px;
-            margin: 30px auto 0;
-            font-size: 19px;
-            color: var(--white);
-            font-weight: 300;
-            line-height: 1.6;
-        }
-
-        .gallery-hero strong {
-            color: var(--gold);
+        .hero-sub {
+            font-size: 1rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid var(--color-accent);
+            padding-bottom: 0.5rem;
+            display: inline-block;
         }
 
         
@@ -415,6 +411,9 @@
         @media (max-width: 768px) {
             .navbar { padding: 1rem; }
             .nav-links { display: none; }
+            .hero h1 {
+                font-size: 3rem;
+            }
             .moments-grid { 
                 grid-template-columns: 1fr;
                 grid-auto-rows: 250px;
@@ -427,12 +426,6 @@
             .food-grid { 
                 grid-template-columns: 1fr;
                 padding: 0 20px;
-            }
-            .gallery-hero {
-                height: 50vh;
-            }
-            .gallery-hero h2 {
-                font-size: 40px;
             }
             .footer-details {
                 flex-direction: column;
@@ -478,17 +471,12 @@
         </div>
     </nav>
     
-    <section class="gallery-hero">
-        <div class="gallery-hero-content">
-            <h2 class="section-title">A Feast for the Senses</h2>
-            <div class="section-divider"></div>
-            <p>
-                Welcome to the Mezzanine's visual journal. From the meticulous <strong>French techniques</strong> 
-                applied to heritage <strong>Filipino ingredients</strong>, to the candid, "human" moments 
-                that define our service—explore the artistry behind our craft.
-            </p>
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Gallery</h1>
+            <div class="hero-sub">Elegance shaped by culture, flavor shaped by home.</div><br>
         </div>
-    </section>
+    </header>
 
     <div class="food-gallery-wrapper">
         <h2 class="section-title">Food Gallery</h2>
