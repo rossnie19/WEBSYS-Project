@@ -1,421 +1,20 @@
-<!DOCTYPE html> 
-<html lang="en"> 
-<head> 
-    <meta charset="UTF-8"> 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-    <title>Mezzanine | Our Ingredients</title> 
-    
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-    
-    <style>
-        /* ========== REUSING CORE VARIABLES & STYLES ========== */
-        :root {
-            --color-primary: #7C1309; 
-            --color-accent: #D6A34F; 
-            --color-light: #FFF7EF; 
-            --color-white: #FFFFFF; 
-            --color-dark: #1a1a1a; 
-            --font-serif: 'Playfair Display', serif; 
-            --font-sans: 'Lato', sans-serif; 
-        }
+<!DOCTYPE html>
+<html lang="en">
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Ingredients | Mezzanine</title>
 
-        body {
-            font-family: var(--font-sans); 
-            background-color: var(--color-light); 
-            color: var(--color-dark); 
-            line-height: 1.6; 
-        }
+    <link rel="stylesheet" href="mezzanine-theme.css">
 
-        h1, h2, h3 { font-family: var(--font-serif); } 
-        a { text-decoration: none; color: inherit; transition: color 0.3s ease; }
-        ul { list-style: none; } 
-
-        /* ========== NAVIGATION BAR ========== */
-        .navbar {
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            padding: 1.2rem 3rem; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            z-index: 1000; 
-            background-color: transparent; 
-            border-bottom: 1px solid rgba(255,255,255,0.1); 
-            transition: all 0.4s ease; 
-        }
-
-        .navbar.scrolled {
-            background-color: var(--color-white); 
-            padding: 0.8rem 3rem; 
-            box-shadow: 0 2px 15px rgba(0,0,0,0.05); 
-            border-bottom: none; 
-        }
-
-        .brand-logo {
-            font-family: var(--font-serif); 
-            font-size: 1.5rem; 
-            font-weight: 700; 
-            letter-spacing: 0.15em; 
-            text-transform: uppercase; 
-            color: var(--color-white); 
-        }
-
-        .navbar.scrolled .brand-logo {
-            color: var(--color-primary); 
-        }
-
-        .nav-links {
-            display: flex; 
-            gap: 2rem; 
-            align-items: center;
-        }
-
-        .nav-link {
-            font-size: 0.75rem; 
-            text-transform: uppercase; 
-            letter-spacing: 0.15em; 
-            font-weight: 700; 
-            color: var(--color-white); 
-            position: relative; 
-        }
-
-        .navbar.scrolled .nav-link {
-            color: var(--color-dark); 
-        }
-
-        .nav-link::after { 
-            content: ''; 
-            position: absolute; 
-            width: 0; 
-            height: 1px; 
-            bottom: -5px; 
-            left: 0; 
-            background-color: var(--color-accent); 
-            transition: width 0.3s ease; 
-        }
-
-        .nav-link:hover::after { width: 100%; } 
-        
-         .nav-dropdown {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-
-        .dropdown-menu {
-            position: absolute;
-            top: 120%;
-            left: 0;
-            background: var(--color-white);
-            min-width: 200px;
-            padding: 0.8rem 0;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(10px);
-            transition: all 0.3s ease;
-            z-index: 999;
-        }
-
-        .dropdown-menu a {
-            display: block;
-            padding: 0.6rem 1.2rem;
-            font-size: 0.75rem;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--color-dark);
-        }
-
-        .dropdown-menu a:hover {
-            background: var(--color-light);
-            color: var(--color-primary);
-        }
-
-        .nav-dropdown:hover .dropdown-menu {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        /* ========== HERO SECTION ========== */
-        .hero {
-            height: 60vh;
-            background-image: url("ingredientshero.jpg"); 
-            background-size: cover; 
-            background-position: center; 
-            background-attachment: fixed;
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: center; 
-            text-align: center; 
-            color: var(--color-white); 
-            position: relative; 
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background:
-                linear-gradient(
-                    rgba(124, 19, 9, 0.25),
-                    rgba(124, 19, 9, 0.25)
-                ),
-                rgba(0, 0, 0, 0.25);
-            z-index: 1;
-        }
-
-        .hero-content {
-            position: relative; 
-            z-index: 2; 
-        }
-
-        .hero h1 { 
-            font-size: 4rem; 
-            margin-bottom: 0.5rem; 
-            font-style: italic; 
-            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
-        }
-
-        .hero-sub {
-            font-size: 0.9rem; 
-            letter-spacing: 0.3em; 
-            text-transform: uppercase; 
-            border-bottom: 1px solid var(--color-accent); 
-            padding-bottom: 0.5rem; 
-            display: inline-block; 
-            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
-        }
-
-        /* ========== COMMON LAYOUT ========== */
-        .section-padding { padding: 6rem 1.5rem; } 
-        .wrapper { max-width: 1100px; margin: 0 auto; } 
-        .section-header { text-align: center; margin-bottom: 3rem; }
-        .section-title { font-size: 2.5rem; color: var(--color-primary); margin-bottom: 1rem; font-weight: 400; }
-        .divider { width: 60px; height: 2px; background-color: var(--color-accent); margin: 0 auto; }
-        .intro-block { text-align: center; max-width: 700px; margin: 0 auto 4rem; font-size: 1.1rem; }
-        .intro-block strong { color: var(--color-primary); }
-
-        /* ========== INTERACTIVE MAP STYLES (UPDATED) ========== */
-        .map-section {
-            background-color: var(--color-white);
-            position: relative;
-        }
-
-        .map-container {
-            position: relative;
-            max-width: 1000px;
-            margin: 0 auto;
-            border: 1px solid rgba(0,0,0,0.1);
-            background: #fff; 
-            overflow: hidden;
-            border-radius: 4px;
-            width: 100%;
-            /* FIX 1: Removed aspect-ratio so the container fits the image exactly */
-        }
-
-        .world-map {
-            width: 100%;
-            /* FIX 2: Changed from 100% to auto so the image doesn't stretch or crop */
-            height: auto; 
-            display: block;
-            /* FIX 3: Removed object-fit: cover to prevent cropping */
-            transition: opacity 0.3s ease;
-        }
-        
-        .hotspot {
-            position: absolute;
-            width: 24px;
-            height: 24px;
-            background-color: var(--color-primary);
-            border: 2px solid var(--color-white);
-            border-radius: 50%;
-            cursor: pointer;
-            z-index: 100;
-            transform: translate(-50%, -50%); 
-            transition: all 0.3s ease;
-            box-shadow: 0 0 0 0 rgba(124, 19, 9, 0.7);
-            animation: pulse-red 2s infinite;
-        }
-
-        .hotspot::before {
-            content: '';
-            position: absolute;
-            top: -10px; left: -10px; right: -10px; bottom: -10px;
-            background: transparent;
-            border-radius: 50%;
-        }
-
-        .hotspot:hover {
-            transform: translate(-50%, -50%) scale(1.2);
-            background-color: var(--color-accent);
-        }
-
-        .hotspot::after {
-            content: attr(data-country);
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--color-dark);
-            color: var(--color-white);
-            padding: 5px 10px;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            white-space: nowrap;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-            border-radius: 2px;
-        }
-
-        .hotspot:hover::after { opacity: 1; }
-
-        @keyframes pulse-red {
-            0% { transform: translate(-50%, -50%) scale(0.95); box-shadow: 0 0 0 0 rgba(124, 19, 9, 0.7); }
-            70% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 0 15px rgba(124, 19, 9, 0); }
-            100% { transform: translate(-50%, -50%) scale(0.95); box-shadow: 0 0 0 0 rgba(124, 19, 9, 0); }
-        }
-
-        /* ========== INGREDIENT MODAL/POPUP ========== */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(26, 26, 26, 0.9);
-            z-index: 2000;
-            display: flex; justify-content: center; align-items: center;
-            opacity: 0; visibility: hidden;
-            transition: all 0.4s ease;
-            backdrop-filter: blur(5px);
-        }
-
-        .modal-overlay.active { opacity: 1; visibility: visible; }
-
-        .modal-content {
-            background: var(--color-white);
-            width: 90%; max-width: 500px;
-            padding: 3rem;
-            text-align: center;
-            position: relative;
-            border-top: 5px solid var(--color-primary);
-            transform: translateY(20px);
-            transition: transform 0.4s ease;
-        }
-
-        .modal-overlay.active .modal-content { transform: translateY(0); }
-
-        .close-modal {
-            position: absolute; top: 15px; right: 20px;
-            font-size: 1.5rem; cursor: pointer; color: var(--color-dark);
-            transition: color 0.3s ease;
-        }
-        .close-modal:hover { color: var(--color-primary); }
-
-        .modal-country {
-            font-family: var(--font-serif); font-size: 2rem; 
-            color: var(--color-primary); margin-bottom: 0.5rem;
-        }
-
-        .modal-subtitle {
-            text-transform: uppercase; letter-spacing: 2px; font-size: 0.7rem;
-            color: #888; margin-bottom: 2rem; display: block;
-        }
-
-        .ingredient-list { text-align: left; padding: 0 1rem; }
-        .ingredient-item {
-            display: flex; align-items: flex-start; margin-bottom: 1.5rem;
-            border-bottom: 1px solid #eee; padding-bottom: 1rem;
-        }
-        .ingredient-item:last-child { border-bottom: none; }
-
-        .ing-icon { 
-            color: var(--color-accent); font-size: 1.2rem; margin-right: 15px; margin-top: -3px;
-        }
-        .ing-name { font-weight: 700; color: var(--color-dark); display: block; margin-bottom: 0.2rem;}
-        .ing-desc { font-size: 0.9rem; color: #555; }
-
-        /* ========== FOOTER ========== */
-        footer {
-            background-color: #111; 
-            color: #ccc; 
-            text-align: center; 
-            padding: 5rem 1rem 3rem; 
-            border-top: 3px solid var(--color-primary); 
-        }
-
-        .footer-logo {
-            font-family: var(--font-serif); 
-            font-size: 2.5rem; 
-            color: var(--color-white); 
-            margin-bottom: 4rem; 
-            display: inline-block; 
-            letter-spacing: 2px; 
-        }
-
-        .footer-details {
-            max-width: 1100px; 
-            margin: 0 auto 3rem; 
-            font-size: 0.9rem; 
-            line-height: 2; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: flex-start; 
-            flex-wrap: wrap; 
-            gap: 2rem; 
-        }
-
-        .footer-section {
-            flex: 1; 
-            min-width: 200px; 
-            margin-bottom: 1rem; 
-        }
-
-        .footer-section strong {
-            color: var(--color-accent); 
-            text-transform: uppercase; 
-            letter-spacing: 1.5px; 
-            font-size: 0.8rem; 
-            display: block; 
-            margin-bottom: 1rem; 
-        }
-
-        .contact-number {
-            color: var(--color-white); 
-            font-weight: 700; 
-        }
-
-        .copyright { 
-            font-size: 0.75rem; 
-            opacity: 0.5; 
-            border-top: 1px solid #333; 
-            padding-top: 2rem; 
-            margin-top: 2rem; 
-            max-width: 1100px; 
-            margin-left: auto; 
-            margin-right: auto; 
-        }
-
-        /* Mobile Adjustments */
-        @media (max-width: 768px) {
-            .navbar { padding: 1rem; }
-            .nav-links { display: none; }
-            .hero h1 { font-size: 3rem; }
-            /* FIX 4: Removed the fixed height on mobile so the map shrinks naturally */
-            .world-map { width: 100%; }
-        }
-    </style>
 </head>
+
 <body>
-    <nav class="navbar"> 
-        <div class="brand-logo">Mezzanine</div> 
-        <div class="nav-links"> 
-            <a href="#" class="nav-link">Home</a> 
+    <nav class="navbar">
+        <div class="brand-logo">Mezzanine</div>
+        <div class="nav-links">
+            <a href="MezzanineMain.html" class="nav-link">Home</a>
             <div class="nav-dropdown">
                 <a href="cuisine.html" class="nav-link">Cuisine</a>
 
@@ -425,68 +24,62 @@
                     <a href="special-offers.html">Special Offers</a>
                 </div>
             </div>
-            <a href="#" class="nav-link">Gallery</a> 
+            <a href="gallery.html" class="nav-link">Gallery</a>
             <div class="nav-dropdown">
-                <a href="reservations.html" class="nav-link">Rerservations</a>
+                <a href="reservations.html" class="nav-link">Reservations</a>
                 <div class="dropdown-menu">
-                    <a href="" class="dropdown-link">Book a Table</a>
-                    <a href="" class="dropdown-link">Business Offers</a>
-                    <a href="" class="dropdown-link">Location</a>
+                    <a href="book-a-table.html" class="dropdown-link">Book a Table</a>
+                    <a href="business-offers.html" class="dropdown-link">Business Offers</a>
+                    <a href="location.html" class="dropdown-link">Location</a>
                 </div>
-            </div>  
-            <a href="#" class="nav-link">Reviews</a> 
+            </div>
+            <a href="reviews.html" class="nav-link">Reviews</a>
             <div class="nav-dropdown">
-                <a href="" class="nav-link">About Us</a>
+                <a href="about-us.html" class="nav-link">About Us</a>
                 <div class="dropdown-menu">
-                    <a href="" class="dropdown-link">Our Ingredients</a>
-                    <a href="" class="dropdown-link">About Our Team</a>
+                    <a href="our-ingredients.html" class="dropdown-link">Our Ingredients</a>
+                    <a href="team.html" class="dropdown-link">About Our Team</a>
                 </div>
-            </div>   
-            <a href="#" class="nav-link">Contact Us</a> 
+            </div>
+            <a href="contact-us.html" class="nav-link">Contact Us</a>
         </div>
     </nav>
 
-    <header class="hero"> 
-        <div class="hero-content"> 
-            <h1>Our Ingredients</h1> 
+
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Our Ingredients</h1>
             <div class="hero-sub">From the World to Your Plate</div>
         </div>
     </header>
 
-    <section class="section-padding wrapper"> 
-        <div class="section-header"> 
-            <h2 class="section-title">The Origin Map</h2> 
-            <div class="divider"></div> 
+    <section class="section-padding wrapper">
+        <div class="section-header">
+            <h2 class="section-title">The Origin Map</h2>
+            <div class="section-divider"></div>
         </div>
-        <p class="intro-block"> 
-            Our menu is a dialogue between international finesse and local warmth. We source our 
-            core produce from the Philippines to support local communities, while importing specific 
+        <p class="intro-block">
+            Our menu is a dialogue between international finesse and local warmth. We source our
+            core produce from the Philippines to support local communities, while importing specific
             delicacies from France, Japan, Italy, and Chile to ensure authenticity in every bite.
         </p>
+
+        <br>
 
         <div class="map-section">
             <div class="map-container">
                 <img src="worldmap.jpg" alt="World Source Map" class="world-map">
-                
-                <div class="hotspot" style="top: 53%; left: 80%;" 
-                     data-country="Philippines" 
-                     data-key="philippines"></div>
 
-                <div class="hotspot" style="top: 34%; left: 47%;" 
-                     data-country="France" 
-                     data-key="france"></div>
+                <div class="hotspot" style="top: 53%; left: 80%;" data-country="Philippines" data-key="philippines">
+                </div>
 
-                <div class="hotspot" style="top: 39%; left: 85%;" 
-                     data-country="Japan" 
-                     data-key="japan"></div>
-                     
-                <div class="hotspot" style="top: 37%; left: 50%;" 
-                     data-country="Italy" 
-                     data-key="italy"></div>
+                <div class="hotspot" style="top: 34%; left: 47%;" data-country="France" data-key="france"></div>
 
-                <div class="hotspot" style="top: 78%; left: 28%;" 
-                     data-country="Chile" 
-                     data-key="chile"></div>
+                <div class="hotspot" style="top: 39%; left: 85%;" data-country="Japan" data-key="japan"></div>
+
+                <div class="hotspot" style="top: 37%; left: 50%;" data-country="Italy" data-key="italy"></div>
+
+                <div class="hotspot" style="top: 78%; left: 28%;" data-country="Chile" data-key="chile"></div>
 
             </div>
             <p style="text-align: center; margin-top: 1rem; font-size: 0.8rem; opacity: 0.6; font-style: italic;">
@@ -500,45 +93,45 @@
             <span class="close-modal" id="closeBtn">&times;</span>
             <h2 class="modal-country" id="modalTitle">Country Name</h2>
             <span class="modal-subtitle">Primary Imports</span>
-            
+
             <div class="ingredient-list" id="modalList">
-                </div>
+            </div>
         </div>
     </div>
 
-    <footer> 
-        <div class="footer-logo">MEZZANINE</div> 
-        
-        <div class="footer-details"> 
-            <div class="footer-section"> 
-                <strong>Visit Us</strong> 
-                <p>Level M, Active Fun Bldg.,<br>9th Avenue Cor. 28th St.,<br>BGC, Taguig City.</p> 
+    <footer>
+        <div class="footer-logo">MEZZANINE</div>
+
+        <div class="footer-details">
+            <div class="footer-section">
+                <strong>Visit Us</strong>
+                <p>Level M, Active Fun Bldg.,<br>9th Avenue Cor. 28th St.,<br>BGC, Taguig City.</p>
             </div>
 
-            <div class="footer-section"> 
-                <strong>Opening Hours</strong> 
-                <p>Monday to Sunday<br>11:00 AM – 11:00 PM</p> 
+            <div class="footer-section">
+                <strong>Opening Hours</strong>
+                <p>Monday to Sunday<br>11:00 AM – 11:00 PM</p>
             </div>
 
-            <div class="footer-section"> 
-                <strong>Contact</strong> 
-                <p>Connect with us via Call or WhatsApp:<br><span class="contact-number">+63 917 138 3612</span></p> 
+            <div class="footer-section">
+                <strong>Contact</strong>
+                <p>Connect with us via Call or WhatsApp:<br><span class="contact-number">+63 917 138 3612</span></p>
             </div>
         </div>
 
-        <div class="copyright"> 
-            &copy; 2024 Mezzanine Group. All Rights Reserved. 
+        <div class="copyright">
+            &copy; 2024 Mezzanine Group. All Rights Reserved.
         </div>
     </footer>
 
     <script>
         // Navbar Scroll Effect
-        const navbar = document.querySelector('.navbar'); 
-        window.addEventListener('scroll', () => { 
-            if (window.scrollY > 50) { 
-                navbar.classList.add('scrolled'); 
-            } else { 
-                navbar.classList.remove('scrolled'); 
+        const navbar = document.querySelector('.navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
             }
         });
 
@@ -593,7 +186,7 @@
 
         function openModal(countryKey) {
             const data = sourceData[countryKey];
-            if(data) {
+            if (data) {
                 modalTitle.textContent = data.title;
                 modalList.innerHTML = '';
                 data.items.forEach(item => {
@@ -618,7 +211,7 @@
 
         const hotspots = document.querySelectorAll('.hotspot');
         hotspots.forEach(spot => {
-            spot.addEventListener('click', function(e) {
+            spot.addEventListener('click', function (e) {
                 e.stopPropagation();
                 const key = this.getAttribute('data-key');
                 openModal(key);
@@ -635,4 +228,5 @@
     </script>
 
 </body>
+
 </html>
