@@ -620,8 +620,8 @@ footer {
         gap: 3rem;
     }
 
-    .map-container {
-        height: 350px;
+    .ingredients-map {
+        aspect-ratio: 600 / 336;
     }
 
     .reviews-hero {
@@ -1697,11 +1697,11 @@ textarea {
 .map-container {
     height: 450px;
     border: 3px solid var(--color-light);
-    overflow: hidden;
+    overflow: visible;
 }
 
 .map-container iframe {
-    width: 100%;
+    width: 150%;
     height: 100%;
     border: none;
 }
@@ -1986,7 +1986,7 @@ textarea {
     position: relative;
 }
 
-.map-container {
+.ingredients-map-container {
     position: relative;
     max-width: 1000px;
     margin: 0 auto;
@@ -1995,11 +1995,16 @@ textarea {
     overflow: hidden;
     border-radius: 4px;
     width: 100%;
+    aspect-ratio: 600 / 336;
+    height: auto !important;
 }
-
 .world-map {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: contain;
     display: block;
     transition: opacity 0.3s ease;
 }
