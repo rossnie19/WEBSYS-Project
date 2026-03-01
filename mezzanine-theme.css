@@ -2511,3 +2511,69 @@ textarea {
     padding-top: 0.5rem;
     padding-bottom: 1rem;
 }
+
+/* ========== DYNAMIC REVIEWS STYLES ========== */
+
+.review-form-container {
+    max-width: 600px;
+    margin: 0 auto 50px auto;
+    background: var(--color-white);
+    padding: 40px;
+    border-top: 3px solid var(--color-accent);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+    display: none; /* Hidden by default */
+    animation: slideDown 0.4s ease-out;
+}
+
+.review-form-container.active {
+    display: block;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.review-form h3 {
+    text-align: center;
+    color: var(--color-primary);
+    margin-bottom: 30px;
+    font-family: var(--font-serif);
+}
+
+.star-rating-input {
+    display: flex;
+    gap: 10px;
+    font-size: 32px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.star-input {
+    color: #ddd; /* Gray by default */
+    transition: color 0.2s;
+}
+
+.star-input:hover,
+.star-input.hovered,
+.star-input.selected {
+    color: var(--color-accent);
+}
+
+/* Delete Button for Review Cards */
+.delete-review-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: #ccc;
+    cursor: pointer;
+    font-size: 14px;
+    transition: color 0.3s;
+}
+
+.delete-review-btn:hover {
+    color: #c41e3a;
+}
+
