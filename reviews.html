@@ -135,124 +135,55 @@
     </section>
 
     <!-- GOOGLE REVIEWS -->
-    <section class="google-reviews-section">
-        <h2 class="section-title">Google Reviews</h2>
+    <section class="google-reviews-section" id="reviews-section">
+        <h2 class="section-title">Guest Reviews</h2>
         <div class="section-divider"></div>
 
         <div class="reviews-container">
             <div class="google-header">
                 <div class="rating-display">
-                    <div class="rating-number">4.2</div>
+                    <div class="rating-number" id="average-rating">0.0</div>
                     <div>
-                        <div class="stars">★★★★</div>
-                        <div class="review-count">Based on 53 reviews</div>
+                        <div class="stars" id="average-stars">★★★★★</div>
+                        <div class="review-count">Based on <span id="total-reviews">0</span> reviews</div>
                     </div>
                 </div>
+                <button id="toggle-form-btn" class="reserve-btn" style="margin-top: 20px;">Write a Review</button>
             </div>
 
-            <div class="reviews-grid">
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="reviewer-avatar">PA</div>
-                        <div class="reviewer-info">
-                            <div class="reviewer-name">Patricia Avellana</div>
-                            <div class="review-stars">★★★★★</div>
-                        </div>
+            <div class="review-form-container" id="review-form-container">
+                <form id="review-form" class="review-form">
+                    <h3>Share your experience</h3>
+                    
+                    <div class="form-group">
+                        <label>Your Name</label>
+                        <input type="text" id="reviewer-name" placeholder="ENTER YOUR NAME" required>
                     </div>
-                    <p class="review-text">
-                        "Highly recommended for those who appreciate dining with a touch of elegance, Chef Alain Bistrot
-                        Brasserie is perfect for any special occasion or a memorable night out. The ambiance was cozy
-                        yet sophisticated, adorned with vintage posters and warm lighting that created the perfect
-                        atmosphere. The service was exceptional, with our server offering knowledgeable recommendations
-                        and ensuring impeccable timing. The food was outstanding—every dish, from appetizers to dessert,
-                        was flavorful and beautifully presented. The extensive wine list and creative cocktails further
-                        enhanced the evening. A definite 5-star experience!"
-                    </p>
-                    <div class="review-date">2 weeks ago</div>
-                </div>
 
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="reviewer-avatar">GC</div>
-                        <div class="reviewer-info">
-                            <div class="reviewer-name">Geanne Chan</div>
-                            <div class="review-stars">★★★★★</div>
+                    <div class="form-group">
+                        <label>Rating</label>
+                        <div class="star-rating-input">
+                            <span class="star-input" data-value="1">★</span>
+                            <span class="star-input" data-value="2">★</span>
+                            <span class="star-input" data-value="3">★</span>
+                            <span class="star-input" data-value="4">★</span>
+                            <span class="star-input" data-value="5">★</span>
                         </div>
+                        <input type="hidden" id="rating-value" required>
+                        <div class="required-message" id="star-error">Please select a rating</div>
                     </div>
-                    <p class="review-text">
-                        "We enjoyed everything we ordered, especially the cheese board, the pastas (their gnocchi a must
-                        try!), and the crepe suzette. They also have a good wine selection."
-                    </p>
-                    <div class="review-date">1 month ago</div>
-                </div>
 
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="reviewer-avatar">DM</div>
-                        <div class="reviewer-info">
-                            <div class="reviewer-name">Douglas Mello</div>
-                            <div class="review-stars">★★★★★</div>
-                        </div>
+                    <div class="form-group">
+                        <label>Review</label>
+                        <textarea id="review-text" placeholder="DESCRIBE YOUR DINING EXPERIENCE..." required></textarea>
                     </div>
-                    <p class="review-text">
-                        "Great restaurant in the heart of BGC. We ate so much food and had a wonderful time here. Chef
-                        Alain greeted us warmly, and the food was prepared to perfection. It is authentic French cuisine
-                        with a great happy hour. Will eat here again!"
-                    </p>
-                    <div class="review-date">3 weeks ago</div>
-                </div>
 
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="reviewer-avatar">KR</div>
-                        <div class="reviewer-info">
-                            <div class="reviewer-name">Kenneth Rosas</div>
-                            <div class="review-stars">★★★★★</div>
-                        </div>
-                    </div>
-                    <p class="review-text">
-                        "We had a fantastic meal at Chef Alain Bistrot Brasserie! The dishes were beautifully prepared
-                        and bursting with flavor. The ambiance was charming, and the service was top-notch. Highly
-                        recommend this place for a delightful dining experience!"
-                    </p>
-                    <div class="review-date">1 week ago</div>
-                </div>
-
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="reviewer-avatar">MD</div>
-                        <div class="reviewer-info">
-                            <div class="reviewer-name">M De Guzman</div>
-                            <div class="review-stars">★★★★★</div>
-                        </div>
-                    </div>
-                    <p class="review-text">
-                        "We really enjoyed the food and it was a nice place to spend time with friends without too much
-                        noise. The staff are very observant, checking if you need anything.
-
-                        I dropped my wallet and only realized the next day. The staff were able to find it and kept it
-                        for me until I claimed it.
-
-                        I appreciate the warmth, honesty and kindness of your staff."
-                    </p>
-                    <div class="review-date">2 months ago</div>
-                </div>
-
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="reviewer-avatar">RS</div>
-                        <div class="reviewer-info">
-                            <div class="reviewer-name">Rowel Sangalang</div>
-                            <div class="review-stars">★★★★★</div>
-                        </div>
-                    </div>
-                    <p class="review-text">
-                        "Celebrated a special occasion here and it was perfect. The ambiance, the food, and the service
-                        all exceeded our expectations."
-                    </p>
-                    <div class="review-date">3 weeks ago</div>
-                </div>
+                    <button type="submit" class="contact-btn" style="background: var(--color-primary); color: white;">Submit Review</button>
+                </form>
             </div>
+
+            <div class="reviews-grid" id="reviews-grid">
+                </div>
         </div>
     </section>
 
@@ -355,6 +286,178 @@
     </script>
     <script async src="https://www.tiktok.com/embed.js"></script>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- DOM Elements ---
+            const formContainer = document.getElementById('review-form-container');
+            const toggleBtn = document.getElementById('toggle-form-btn');
+            const reviewForm = document.getElementById('review-form');
+            const reviewsGrid = document.getElementById('reviews-grid');
+            const stars = document.querySelectorAll('.star-input');
+            const ratingInput = document.getElementById('rating-value');
+            const starError = document.getElementById('star-error');
+            
+            // Stats Elements
+            const avgRatingEl = document.getElementById('average-rating');
+            const totalReviewsEl = document.getElementById('total-reviews');
+            const avgStarsEl = document.getElementById('average-stars');
+
+            // --- Initial Data (Simulated Database) ---
+            const initialReviews = [
+                { id: 1, name: "Patricia Avellana", rating: 5, text: "Highly recommended for those who appreciate dining with a touch of elegance. A definite 5-star experience!", date: "2 weeks ago" },
+                { id: 2, name: "Geanne Chan", rating: 5, text: "We enjoyed everything we ordered, especially the cheese board and the pastas.", date: "1 month ago" },
+                { id: 3, name: "Douglas Mello", rating: 4, text: "Great restaurant in the heart of BGC. Chef Alain greeted us warmly.", date: "3 weeks ago" }
+            ];
+
+            // Load from LocalStorage or use Initial Data
+            let reviewsData = JSON.parse(localStorage.getItem('mezzanine_reviews')) || initialReviews;
+
+            // --- Functions ---
+
+            // 1. Render all reviews
+            function renderReviews() {
+                reviewsGrid.innerHTML = ''; // Clear current grid
+                
+                let totalRating = 0;
+
+                reviewsData.forEach(review => {
+                    totalRating += parseInt(review.rating);
+                    
+                    // Create Star String
+                    let starString = '★'.repeat(review.rating) + '☆'.repeat(5 - review.rating);
+
+                    const card = document.createElement('div');
+                    card.className = 'review-card';
+                    card.innerHTML = `
+                        <button class="delete-review-btn" onclick="deleteReview(${review.id})">✕</button>
+                        <div class="review-header">
+                            <div class="reviewer-avatar">${getInitials(review.name)}</div>
+                            <div class="reviewer-info">
+                                <div class="reviewer-name">${review.name}</div>
+                                <div class="review-stars">${starString}</div>
+                            </div>
+                        </div>
+                        <p class="review-text">"${review.text}"</p>
+                        <div class="review-date">${review.date}</div>
+                    `;
+                    // Add new reviews to the top
+                    reviewsGrid.prepend(card);
+                });
+
+                updateStats(totalRating, reviewsData.length);
+            }
+
+            // 2. Helper: Get Initials
+            function getInitials(name) {
+                return name.match(/(\b\S)?/g).join("").match(/(^\S|\S$)?/g).join("").toUpperCase();
+            }
+
+            // 3. Update Statistics Header
+            function updateStats(total, count) {
+                totalReviewsEl.textContent = count;
+                if (count === 0) {
+                    avgRatingEl.textContent = "0.0";
+                    avgStarsEl.textContent = "☆☆☆☆☆";
+                } else {
+                    const avg = (total / count).toFixed(1);
+                    avgRatingEl.textContent = avg;
+                    
+                    // Calculate visual stars for average
+                    const roundedAvg = Math.round(avg);
+                    avgStarsEl.textContent = '★'.repeat(roundedAvg) + '☆'.repeat(5 - roundedAvg);
+                }
+            }
+
+            // 4. Handle Star Interaction (Hover & Click)
+            stars.forEach(star => {
+                // Hover Effect
+                star.addEventListener('mouseover', function() {
+                    const value = this.getAttribute('data-value');
+                    highlightStars(value);
+                });
+
+                // Mouse leave (reset to selected value)
+                document.querySelector('.star-rating-input').addEventListener('mouseleave', function() {
+                    const value = ratingInput.value || 0;
+                    highlightStars(value);
+                });
+
+                // Click (Selection)
+                star.addEventListener('click', function() {
+                    const value = this.getAttribute('data-value');
+                    ratingInput.value = value;
+                    highlightStars(value);
+                    stars.forEach(s => s.classList.remove('selected'));
+                    for(let i=0; i<value; i++) stars[i].classList.add('selected');
+                    starError.style.display = 'none';
+                });
+            });
+
+            function highlightStars(value) {
+                stars.forEach(s => {
+                    if (s.getAttribute('data-value') <= value) {
+                        s.style.color = 'var(--color-accent)';
+                    } else {
+                        s.style.color = '#ddd';
+                    }
+                });
+            }
+
+            // 5. Toggle Form
+            toggleBtn.addEventListener('click', () => {
+                formContainer.classList.toggle('active');
+                toggleBtn.textContent = formContainer.classList.contains('active') ? 'Close Form' : 'Write a Review';
+            });
+
+            // 6. Handle Form Submit
+            reviewForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                // Validate Rating
+                if (!ratingInput.value) {
+                    starError.style.display = 'block';
+                    return;
+                }
+
+                const newReview = {
+                    id: Date.now(), // Unique ID based on timestamp
+                    name: document.getElementById('reviewer-name').value,
+                    rating: parseInt(ratingInput.value),
+                    text: document.getElementById('review-text').value,
+                    date: "Just now"
+                };
+
+                // Add to array
+                reviewsData.push(newReview);
+                
+                // Save to LocalStorage
+                localStorage.setItem('mezzanine_reviews', JSON.stringify(reviewsData));
+
+                // Reset Form
+                reviewForm.reset();
+                ratingInput.value = '';
+                highlightStars(0);
+                formContainer.classList.remove('active');
+                toggleBtn.textContent = 'Write a Review';
+
+                // Re-render
+                renderReviews();
+                alert("Thank you! Your review has been submitted.");
+            });
+
+            // 7. Global function to delete reviews
+            window.deleteReview = function(id) {
+                if(confirm('Are you sure you want to delete this review?')) {
+                    reviewsData = reviewsData.filter(review => review.id !== id);
+                    localStorage.setItem('mezzanine_reviews', JSON.stringify(reviewsData));
+                    renderReviews();
+                }
+            };
+
+            // Initialize
+            renderReviews();
+        });
+    </script>
 </body>
 
 </html>
